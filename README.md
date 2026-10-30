@@ -212,6 +212,6 @@ The images pin PHP 8.3.30 / 8.4.19, Node 24.21.0 and Composer 2.8.9 by image dig
 
 ## Release and feedback
 
-See [CHANGELOG.md](CHANGELOG.md) for the v0.1.0 contents and [release readiness](docs/launch/release-readiness.md) for identity, licence review and the publication gates. During 0.x, minor releases may contain breaking changes; patch releases are fixes. Pin `^0.1` to stay within the first minor line, and review snapshots explicitly after any renderer update.
+See [CHANGELOG.md](CHANGELOG.md) for release notes and [release readiness](docs/launch/release-readiness.md) for identity, licence review and the publication gates. During 0.x, minor releases may contain breaking changes; patch releases are fixes. Pin `^0.1` to stay within the first minor line, and review snapshots explicitly after any renderer update.
 
-After public launch, report a small reproducible PDF/test and runtime versions in [GitHub issues](https://github.com/craigsimps/assertpdf/issues), using synthetic data rather than customer invoices. No telemetry is collected by the toolkit. Release, demo publication and landing-page go-live still require Craig's approval.
+Report a small reproducible PDF/test and runtime versions in [GitHub issues](https://github.com/craigsimps/assertpdf/issues), using synthetic data rather than customer invoices. No telemetry is collected by the toolkit.
