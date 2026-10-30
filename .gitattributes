@@ -1,0 +1,2 @@
+# PDF xref records have significant spacing; do not normalise or diff as text.
+tests/fixtures/*.pdf binary
