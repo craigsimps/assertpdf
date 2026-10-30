@@ -1,6 +1,6 @@
 # Laravel PDF Testing: brand identity pack
 
-Version 0.1, prepared 2026-10-30 for [milestone 3, part 2](https://github.com/craigsimps/laravel-pdf-testing/issues/3). This pack is the source for the landing page in `docs/site/` and for any README, demo or social artwork. Publication requires Craig’s approval.
+Version 0.1, prepared 2026-10-30 for [milestone 3, part 2](https://github.com/craigsimps/laravel-pdf-testing/issues/3). This pack is the source for the landing page in `site/` and for any README, demo or social artwork. Publication requires Craig’s approval.
 
 Copy edited by Codex in a separate session. Independent design review is still required before acceptance.
 
@@ -9,14 +9,14 @@ Copy edited by Codex in a separate session. Independent design review is still r
 | Path | What it is |
 | --- | --- |
 | `README.md` | This document: direction, logo, type, colour, usage rules. |
-| `tokens.css` | The palette, type scale and shape values as CSS custom properties, light and dark. |
+| `tokens.css` | The palette, type scale and shape values as CSS custom properties, light and dark. Imported directly by the Astro site. |
 | `contrast.mjs` | Checks every text/background pair below against WCAG 2.2. Run `node docs/brand/contrast.mjs`. |
 | `logo/mark.svg`, `logo/mark-dark.svg`, `logo/mark-mono.svg` | The mark on paper, on a dark ground, and in a single colour (`currentColor`). |
 | `logo/wordmark.svg`, `logo/wordmark-dark.svg`, `logo/wordmark-mono.svg` | Mark plus the name. The text is outlined, so no font is needed to display it. |
 | `logo/favicon.svg` | 16 to 32 px version without the text lines; switches colours with the system theme. |
 | `examples/social-preview.svg`, `examples/social-preview.png` | 1280 by 640 GitHub social preview. |
 
-The font files live with the site at `docs/site/fonts/`, next to their licences.
+The font files live with the site at `site/public/fonts/`, next to their licences.
 
 ## 1. Direction
 
@@ -64,8 +64,8 @@ The font files live with the site at `docs/site/fonts/`, next to their licences.
 
 | Role | Family | Licence | Files shipped |
 | --- | --- | --- | --- |
-| Headings, body, UI | [IBM Plex Sans](https://github.com/IBM/plex) | SIL Open Font License 1.1 | `docs/site/fonts/ibm-plex-sans-latin-{400,500,600}-normal.woff2` |
-| Code, commands, labels | [IBM Plex Mono](https://github.com/IBM/plex) | SIL Open Font License 1.1 | `docs/site/fonts/ibm-plex-mono-latin-400-normal.woff2` |
+| Headings, body, UI | [IBM Plex Sans](https://github.com/IBM/plex) | SIL Open Font License 1.1 | `site/public/fonts/ibm-plex-sans-latin-{400,500,600}-normal.woff2` |
+| Code, commands, labels | [IBM Plex Mono](https://github.com/IBM/plex) | SIL Open Font License 1.1 | `site/public/fonts/ibm-plex-mono-latin-400-normal.woff2` |
 
 The woff2 files are the latin subsets from the `@fontsource/ibm-plex-sans` and `@fontsource/ibm-plex-mono` 5.3.0 packages, about 86 KB in total. The OFL text sits beside them as `OFL-IBM-Plex-Sans.txt` and `OFL-IBM-Plex-Mono.txt`. The OFL permits self-hosting and redistribution; it forbids selling the fonts on their own, which we do not do. No paid or proprietary fonts are used anywhere.
 
@@ -178,7 +178,7 @@ Where a dark-mode variant is wanted on GitHub:
 
 **GitHub social preview.** `examples/social-preview.png` (1280 by 640): Ground background, mark and name top left, one display line, one line of description, the Composer command in mono Teal light. Upload it under the repository's settings when the repo goes public; it is not set by this pack.
 
-**Landing page.** `docs/site/index.html` and `docs/site/styles.css` are built from this pack: a Ground header and hero carrying the snapshot triptych, a code-and-terminal split, a Teal deep install band, Ink type on Paper elsewhere, IBM Plex self-hosted, dark mode via the tokens.
+**Landing page.** `site/src/pages/index.astro` and `site/src/styles/site.css` are built from this pack (the layout imports `tokens.css` directly): a Ground header and hero carrying the snapshot triptych, a code-and-terminal split, a Teal deep install band, Ink type on Paper elsewhere, IBM Plex self-hosted, dark mode via the tokens.
 
 **Terminal panels.** Ground background, Text for output, Teal light for keywords and passes, Diff light for failures, Text 2 for strings and dimmed lines. Use the toolkit's real message formats: `Expected PDF to contain "120.00".`, `Expected PDF to have 1 page(s); found 2.`, `PDF snapshot page 1: N changed pixels (allowed 0). Diff: …/diff-1.png`.
 

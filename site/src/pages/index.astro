@@ -1,14 +1,9 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laravel PDF Testing: test the PDF your app generates</title>
-<meta name="description" content="Free, MIT-licensed PDF assertions for Pest and PHPUnit. Check the text, count the pages and compare rendered snapshots.">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#0F171F">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css">
+---
+import Base from '../layouts/Base.astro';
+const title = 'Laravel PDF Testing: test the PDF your app generates';
+const description = 'Free, MIT-licensed PDF assertions for Pest and PHPUnit. Check the text, count the pages and compare rendered snapshots.';
+---
+<Base title={title} description={description}>
 <!--
   LAUNCH CHECKLIST (remove when done):
   1. TODO-DEMO: replace both demo links (id="demo-todo" and the nav) with the verified public demo URL.
@@ -19,8 +14,6 @@
   Copy for this page lives in this file only. Styling is in styles.css.
   The invoice pages in the hero are drawn in HTML; the numbers in them are sample data, not measurements.
 -->
-</head>
-<body>
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header on-ground">
@@ -109,21 +102,21 @@
       <div class="pane pane-code">
         <div class="pane-inner">
           <p class="pane-title">tests/Feature/InvoicePdfTest.php</p>
-          <pre tabindex="0" aria-label="Pest test file"><code><span class="k">it</span>(<span class="s">'has one page'</span>, <span class="k">function</span> () {
+          <pre tabindex="0" aria-label="Pest test file"><code><span class="k">it</span>(<span class="s">'has one page'</span>, <span class="k">function</span> () &#123;
     <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
         -&gt;toHavePdfPageCount(1);
-});
+&#125;);
 
-<span class="k">it</span>(<span class="s">'shows the total'</span>, <span class="k">function</span> () {
+<span class="k">it</span>(<span class="s">'shows the total'</span>, <span class="k">function</span> () &#123;
     <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
         -&gt;toHavePdfText(<span class="s">'Invoice 1001'</span>)
         -&gt;toHavePdfText(<span class="s">'120.00'</span>);
-});
+&#125;);
 
-<span class="k">it</span>(<span class="s">'matches the approved layout'</span>, <span class="k">function</span> () {
+<span class="k">it</span>(<span class="s">'matches the approved layout'</span>, <span class="k">function</span> () &#123;
     <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
         -&gt;toMatchPdfSnapshot(<span class="s">'invoice-1001'</span>);
-});</code></pre>
+&#125;);</code></pre>
         </div>
       </div>
       <div class="pane pane-term on-ground">
@@ -266,5 +259,4 @@
   To enable: create a site at goatcounter.com, replace YOURCODE, and uncomment. Nothing loads while this is a comment.
   <script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 -->
-</body>
-</html>
+</Base>
