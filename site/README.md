@@ -2,7 +2,7 @@
 
 The static landing page for `craigsimps/laravel-pdf-testing`, built with [Astro](https://astro.build) and ready for Cloudflare Pages. It reproduces the design approved on 2026-10-30 ([issue #3](https://github.com/craigsimps/laravel-pdf-testing/issues/3)) and replaces the hand-written `docs/site/` page; see [issue #6](https://github.com/craigsimps/laravel-pdf-testing/issues/6).
 
-This folder is `export-ignore`d in `.gitattributes`, so it never ships in the Composer package.
+This folder is excluded from Composer archives by `.gitattributes`.
 
 ## Layout
 
@@ -64,6 +64,6 @@ Astro strips HTML comments from the output, so these notes never reach visitors.
 
 ## Checks
 
-- Visual: compare `npm run preview` against the approved page at 1440 px and 390 px, light and dark. The reference renders and pixel diffs from the build handoff are in `docs/launch/previews/`.
+- Visual: compare `npm run preview` against the approved page at 1440 px and 390 px, light and dark. The reference renders from the build handoff are in `docs/launch/previews/`. Pixel diffs were not committed.
 - Accessibility: axe-core on the preview, 0 violations expected.
 - Lighthouse: 95 or above in performance, accessibility, best practices and SEO.
