@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laravel PDF Testing: test the PDF your app actually emits</title>
-<meta name="description" content="Free, MIT-licensed Pest and PHPUnit assertions for real PDF text, page count and rendered snapshots in Laravel.">
+<title>Laravel PDF Testing: test the PDF your app generates</title>
+<meta name="description" content="Free, MIT-licensed PDF assertions for Pest and PHPUnit. Check the text, count the pages and compare rendered snapshots.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0F171F">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -50,17 +50,17 @@
     <div class="wrap">
       <div class="hero-copy">
         <p class="eyebrow">Free · MIT · Composer dev package for Pest and PHPUnit</p>
-        <h1 id="hero-title">Your PDF fake passed. Did the invoice still contain the total?</h1>
-        <p class="lead">Test the PDF your Laravel app actually emits: extracted text, page count and rendered visual snapshots. A fake proves you requested a PDF. These assertions inspect the bytes that came back.</p>
+        <h1 id="hero-title">Your PDF fake passed. Is the invoice total there?</h1>
+        <p class="lead">Check the PDF your Laravel app generates. Assert that the invoice contains the right total, or compare its layout with an approved snapshot. A fake checks that you requested a PDF. These assertions check the resulting document.</p>
         <div class="actions">
           <a class="button button-primary" href="#install">Install</a>
           <a class="button button-secondary" href="#moment">See a failing test</a>
         </div>
-        <p class="muted">Laravel test responses, file paths, raw bytes, Spatie Laravel PDF and Dompdf objects. No browser, no hosted service.</p>
+        <p class="muted">Pass a Laravel test response, a file path or raw PDF bytes. Spatie Laravel PDF and Dompdf objects work too. No browser or hosted service required.</p>
       </div>
 
       <figure class="snapshot crop" aria-labelledby="snap-caption">
-        <div class="snap-row" role="img" aria-label="Three renders of the same invoice page: the approved baseline with a total of 120.00, this run with the total missing, and the diff image, in which the missing total is marked in red.">
+        <div class="snap-row" role="img" aria-label="Illustration of three versions of the same invoice page: the approved baseline with a total of 120.00, this run with the total missing, and the diff image, in which the missing total is marked in red.">
           <div class="snap">
             <span class="snap-label">page-1.png<small>baseline</small></span>
             <div class="sheet" aria-hidden="true">
@@ -102,8 +102,8 @@
 
   <section class="moment" id="moment" aria-labelledby="moment-title">
     <div class="wrap">
-      <h2 class="titled" id="moment-title">The test, and what it says when the total goes missing</h2>
-      <p>Three Pest expectations against the response of a real invoice route. When the template drops the total, two of them fail and tell you exactly what the PDF contained.</p>
+      <h2 class="titled" id="moment-title">What happens when the total goes missing</h2>
+      <p>These three Pest tests check an invoice route. In this example, the total is missing: the text check shows what was extracted, and the snapshot check points to the diff. The figures shown are illustrative.</p>
     </div>
     <div class="split">
       <div class="pane pane-code">
@@ -158,42 +158,42 @@
       <dl class="checks">
         <div class="check">
           <dt>toHavePdfText()</dt>
-          <dd>A case-sensitive substring of the PDF's text layer. Not OCR, not a layout guarantee.</dd>
+          <dd>Checks for a case-sensitive substring in the PDF's text layer. It does not use OCR or check layout.</dd>
           <dd class="fails">On failure <code>Expected PDF to contain "120.00". Extracted text: …</code></dd>
         </div>
         <div class="check">
           <dt>toHavePdfPageCount()</dt>
-          <dd>Catches the unexpected page break, or the invoice that silently grew a blank second page.</dd>
+          <dd>Checks the page count, so an unexpected second page fails the test.</dd>
           <dd class="fails">On failure <code>Expected PDF to have 1 page(s); found 2.</code></dd>
         </div>
         <div class="check">
           <dt>toMatchPdfSnapshot()</dt>
-          <dd>Renders each page and compares it with a baseline you created on purpose. One mask and a per-page pixel allowance are available.</dd>
+          <dd>Renders each page and compares it with an approved baseline. You can mask one area or allow a set number of changed pixels per page.</dd>
           <dd class="fails">On failure <code>PDF snapshot page 1: 312 changed pixels (allowed 0). Diff: …/diff-1.png</code></dd>
         </div>
       </dl>
-      <p class="muted">PHPUnit users get the same three as static <code>PdfAssertions</code> methods.</p>
+      <p class="muted">PHPUnit users can call the same checks as static <code>PdfAssertions</code> methods.</p>
     </div>
   </section>
 
   <section class="install on-deep" id="install" aria-labelledby="install-title">
     <div class="wrap">
       <div class="col">
-        <p class="eyebrow">Two commands</p>
+        <p class="eyebrow">After publication on Packagist</p>
         <h2 class="titled" id="install-title">Install</h2>
-        <p>Add it to an existing Laravel 12 app with Pest or PHPUnit. The second command installs the pinned renderer inside the package. Network is needed to install, not to assert.</p>
+        <p>Add it to an existing Laravel 12 app with Pest or PHPUnit. The second command installs the pinned renderer inside the package. Installation needs network access. Assertions run offline.</p>
         <pre class="terminal" tabindex="0" aria-label="Install commands"><code><span class="dim">$</span> composer require --dev 'craigsimps/laravel-pdf-testing:^0.1' -W
 <span class="dim">$</span> vendor/bin/pdf-testing install</code></pre>
-        <p class="muted">No registration step for Pest. The toolkit does not install a PDF generator; bring your own. Full details in the <a href="https://github.com/craigsimps/laravel-pdf-testing#requirements-and-installation">README</a>.</p>
+        <p class="muted">Not on Packagist yet. Until publication, use the local installation instructions in the README. Existing Pest installations need no registration step. Use your own PDF generator. Full details in the <a href="https://github.com/craigsimps/laravel-pdf-testing#requirements-and-installation">README</a>.</p>
       </div>
       <div class="col">
         <h3>You need</h3>
         <ul>
           <li>PHP 8.3 or 8.4</li>
           <li>Laravel 12 (optional; plain PHPUnit projects work too)</li>
-          <li>Pest 3 or 4, or PHPUnit 11.5 / 12</li>
+          <li>Pest 3 or PHPUnit 11.5; Pest 4 or PHPUnit 12 requires PHP 8.4</li>
           <li>Node 24.21.0 and npm 11, used only by the renderer</li>
-          <li>No browser, no Poppler, no Ghostscript, no hosted service</li>
+          <li>No browser, Poppler, Ghostscript or hosted service required</li>
         </ul>
         <p class="note"><strong>Offline after install.</strong> Assertions use in-memory PDF data, bundled fonts and a local Node process. No network requests, no telemetry.</p>
       </div>
@@ -204,19 +204,19 @@
     <div class="wrap">
       <div class="col">
         <h2 class="titled" id="demo-title">A complete example</h2>
-        <p>A minimal Laravel app with a real invoice PDF route and passing text, page-count and snapshot tests. Clone it, run the tests, break the invoice, watch them fail.</p>
+        <p>A small Laravel app with an invoice PDF route and passing PDF tests. Once the repository is public, you can clone it and change the invoice to see which tests fail.</p>
         <!-- TODO-DEMO: replace the href with the verified public demo repository URL. -->
-        <div class="actions"><a class="button button-secondary" id="demo-todo" href="https://github.com/craigsimps/laravel-pdf-testing#demo">Open the demo repository</a></div>
+        <div class="actions"><a class="button button-secondary" id="demo-todo" href="https://github.com/craigsimps/laravel-pdf-testing#demo">Read about the demo</a></div>
         <p class="note note-fail"><strong>Not live yet.</strong> This link is a placeholder until the demo repository is public.</p>
       </div>
       <div class="col">
-        <h3>Snapshots are explicit</h3>
+        <h3>You control snapshot updates</h3>
         <p>A missing baseline fails. Nothing is created or overwritten unless you ask.</p>
         <ol class="steps">
           <li class="step">
             <span class="step-n">01</span>
             <div class="step-body">
-              <p><strong>Create the baseline on purpose.</strong></p>
+              <p><strong>Create the baseline explicitly.</strong></p>
               <pre tabindex="0" aria-label="Create a baseline"><code>PDF_TESTING_UPDATE_SNAPSHOTS=1 vendor/bin/pest --filter='approved layout'</code></pre>
             </div>
           </li>
@@ -230,7 +230,7 @@
             <span class="step-n">03</span>
             <div class="step-body">
               <p><strong>Commit</strong> <code>manifest.json</code> and <code>page-*.png</code>, ignore <code>artifacts/</code>, and never set the update flag in normal CI.</p>
-              <p class="muted">Create and compare baselines on the same pinned renderer, operating system and architecture. Cross-OS pixel identity is not promised.</p>
+              <p class="muted">Create and compare baselines on the same pinned renderer, operating system and architecture. Snapshots are not portable across operating systems.</p>
             </div>
           </li>
         </ol>
@@ -241,8 +241,8 @@
   <section class="limits-section" id="limits" aria-labelledby="limits-title">
     <div class="wrap">
       <div class="intro">
-        <h2 class="titled" id="limits-title">What it is not</h2>
-        <p>Limits, stated next to the features and in the same type size.</p>
+        <h2 class="titled" id="limits-title">Limits</h2>
+        <p>Use this for PDFs your app generates. These limits apply to every assertion.</p>
       </div>
       <ul class="limits">
         <li><strong>Not OCR.</strong> Scanned PDFs without a text layer, and password-protected PDFs, are out of scope.</li>

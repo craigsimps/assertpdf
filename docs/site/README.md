@@ -1,12 +1,12 @@
 # Landing page
 
-One static page for the toolkit, built from the [brand pack](../brand/README.md) and the [content brief](../launch/landing-brief.md). No build step, no framework, no third-party requests: fonts are self-hosted, there is no tracker, and the only external links go to GitHub.
+One static page for the toolkit, built from the [brand pack](../brand/README.md) and the [content brief](../launch/landing-brief.md). There is no build step. Fonts are self-hosted and the page makes no third-party requests. The analytics snippet is commented out; external links go to GitHub.
 
 ## Files
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | The page. All copy lives here; edit the text in place. |
+| `index.html` | The page. All landing-page copy lives here; edit the text in place. |
 | `styles.css` | Styling, with the brand tokens copied from `docs/brand/tokens.css`. |
 | `assets/` | Mark and wordmark SVGs copied from `docs/brand/logo/`. |
 | `favicon.svg` | Theme-aware favicon. |
@@ -29,14 +29,14 @@ Search `index.html` for `TODO-` and resolve each item:
 - `TODO-PACKAGIST`: the install command assumes `craigsimps/laravel-pdf-testing` is on Packagist.
 - `TODO-ANALYTICS`: a GoatCounter snippet is present but commented out. It stays disabled unless Craig opts in.
 
-## Publishing (not done; needs Craig)
+## Publishing (requires Craig’s approval)
 
-GitHub Pages is not enabled and the repository is private. When Craig gives the go-ahead there are two free options:
+GitHub Pages is not enabled and the repository is private. After Craig approves publication, choose one of these options:
 
 1. **Actions deploy of this folder.** `.github/workflows/pages.yml` uploads `docs/site/` as a Pages artifact. It runs only when started by hand (`workflow_dispatch`), so it does nothing until Pages is switched to the "GitHub Actions" source and someone runs it.
-2. **Branch deploy.** Pages can serve `/docs` from a branch, which would publish `docs/site/` at `/site/` alongside the Markdown in `docs/`. Option 1 keeps the URL clean.
+2. **Branch deploy.** Pages can serve `/docs` from a branch, which would publish `docs/site/` at `/site/` alongside the Markdown in `docs/`. Option 1 serves the page at the site root.
 
-Either way: make the repository public first, set the custom domain if any, then run the workflow and check the page at the Pages URL.
+For either option, Craig must approve making the repository public. Set a custom domain if needed. For option 1, run the workflow; for option 2, configure the branch source. Check the page at the Pages URL.
 
 ## Accessibility checklist
 

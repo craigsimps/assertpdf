@@ -1,8 +1,8 @@
 # Laravel PDF Testing: brand identity pack
 
-Version 0.1, prepared 2026-10-30 for [milestone 3, part 2](https://github.com/craigsimps/laravel-pdf-testing/issues/3). This pack is the source for the landing page in `docs/site/` and for any README, demo or social artwork. Nothing here is public until Craig says so.
+Version 0.1, prepared 2026-10-30 for [milestone 3, part 2](https://github.com/craigsimps/laravel-pdf-testing/issues/3). This pack is the source for the landing page in `docs/site/` and for any README, demo or social artwork. Publication requires Craig’s approval.
 
-Copy note: the words in this file and in `docs/site/index.html` are drafts for a separate editing pass. Keep the structure; change the sentences freely.
+Copy edited by Codex in a separate session. Independent design review is still required before acceptance.
 
 ## Contents
 
@@ -20,21 +20,21 @@ The font files live with the site at `docs/site/fonts/`, next to their licences.
 
 ## 1. Direction
 
-**One line:** inspect the document, not the call.
+**One line:** test the PDF your app generates.
 
-**What it is.** A free, MIT-licensed Composer dev package. It reads the PDF a Laravel app actually emits and asserts on its text, page count and rendered pages, in Pest or PHPUnit. It sits alongside generator fakes rather than replacing them: a fake proves you asked for a PDF, this proves what came back.
+**What it is.** A free, MIT-licensed Composer dev package. It reads the PDF a Laravel app generates and checks it in Pest or PHPUnit. Text assertions and page counts check the content; rendered snapshots check for visual changes. Keep generator fakes to check that the app requested a PDF.
 
-**Who it is for.** Laravel developers who already test, who have an invoice, statement or certificate endpoint, and who have been bitten by a PDF that generated fine and was still wrong.
+**Who it is for.** Laravel developers testing an invoice, statement or certificate endpoint where successful generation does not mean the document is correct.
 
-**How it should feel.** Like a careful test tool: paper and ink, one colour for "verified", monospace for anything literal. It should look at home next to Pest output and a GitHub README, not next to a SaaS pricing page.
+**How it should feel.** Use paper and ink colours, with one accent for "verified". Use monospace for commands and output. The design should fit alongside Pest output and a GitHub README.
 
 **Principles.**
 
-1. **Evidence over assurance.** Show the extracted text, the page count, the diff PNG. Any claim on a page must be something the README and the test output can back up. No adoption numbers, testimonials or "trusted by" until they are real.
+1. **Evidence over assurance.** Show the relevant test output or diff PNG. Any claim on a page must be something the README and the test output can back up. No adoption numbers, testimonials or "trusted by" until they are real.
 2. **Quiet and precise.** One typeface family, one accent, 1 px lines, 6 px corners. No gradients, shadows, mascots, emoji or illustration.
-3. **Honest about limits.** Say what it is not (not OCR, not a hosted service, not cross-OS pixel identity) next to what it is, in the same type size.
+3. **Honest about limits.** Keep limitations beside the features, in the same type size. Explain the text-layer requirement and the local runtime. State that snapshots require the same operating system and architecture.
 
-**Voice.** Plain, specific, first-hand. Short sentences. Name the actual thing: "the invoice total", "page 2", "diff-1.png". Prefer "fails" to "may not pass". Avoid "blazing", "bulletproof", "seamless", "powerful", exclamation marks, and any sentence that would also be true of every other package.
+**Voice.** Write plainly and be specific. Short sentences. Name the actual thing: "the invoice total", "page 2", "diff-1.png". Prefer "fails" to "may not pass". Avoid "blazing", "bulletproof", "seamless", "powerful", exclamation marks, and any sentence that would also be true of every other package.
 
 ## 2. Name and mark
 
@@ -149,7 +149,7 @@ Rules:
 
 - Corner radius 6 px on cards, code blocks and buttons; 4 px on badges.
 - 1 px borders in Line; no shadows, no gradients, no background images.
-- **Signature image:** the snapshot triptych. Baseline page, this run's render, and the diff PNG with the changed pixels in Diff mark red on a faded page, captioned with the toolkit's real failure line. It is drawn in HTML and CSS, never a stock image, and is the one picture the brand owns.
+- **Signature image:** the snapshot triptych. Baseline page, this run's render, and the diff PNG with the changed pixels in Diff mark red on a faded page, captioned with the toolkit's real failure line. It is drawn in HTML and CSS, never a stock image, and is the main product illustration.
 - **Motifs:** print crop marks (thin L-shaped corners in Teal light) around the signature image and before section titles; a faint pixel grid behind the diff page. Both are decorative, drawn in CSS, and never carry meaning.
 - **Rhythm:** sections change shape rather than only colour: a dark split hero, a full-bleed code-and-terminal pair, a compact comparison strip, a Teal deep band, a numbered workflow. Avoid stacking same-width cards on alternating backgrounds.
 - Spacing on an 8 px step: 8, 12, 16, 24, 32, 48, 72.
@@ -190,7 +190,7 @@ Where a dark-mode variant is wanted on GitHub:
 
 ## 7. Do and don't
 
-Do: lead with the actual failure the tool catches; show a real assertion; state Node, PHP and Pest versions; use the mark alone at small sizes; keep the tick as the only coloured element in the logo.
+Do: lead with a failure the tool catches; show a real assertion; state Node, PHP and Pest versions; use the mark alone at small sizes; keep the tick as the only coloured element in the logo.
 
 Don't: invent numbers or testimonials; use the Laravel logo or imply endorsement; add a hero illustration, gradient or 3D render; use red for anything but failures; set the wordmark in another typeface; put emoji in headings or buttons.
 

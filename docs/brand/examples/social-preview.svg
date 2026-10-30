@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1280 640" width="1280" height="640" role="img" aria-labelledby="t d">
   <title id="t">Laravel PDF Testing</title>
-  <desc id="d">Test the PDF your Laravel app actually emits. Text, page count and visual snapshots for Pest and PHPUnit. Free, MIT.</desc>
+  <desc id="d">Test the PDF your Laravel app generates. PDF text, page counts and snapshots for Pest and PHPUnit. Free, MIT licensed.</desc>
   <!-- GitHub social preview, 1280x640. Text uses IBM Plex Sans when installed; export the PNG from a machine with the font, or use social-preview.png. -->
   <rect width="1280" height="640" fill="#0F171F"/>
   <g transform="translate(80 72) scale(1.75)">
@@ -12,8 +12,8 @@
   <text x="152" y="118" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="30" font-weight="600" letter-spacing="-0.3" fill="#E8EDF2">Laravel PDF Testing</text>
   <text font-family="IBM Plex Sans, system-ui, sans-serif" font-size="60" font-weight="600" letter-spacing="-1.2" fill="#E8EDF2">
     <tspan x="80" y="330">Test the PDF your Laravel app</tspan>
-    <tspan x="80" y="400">actually emits.</tspan>
+    <tspan x="80" y="400">generates.</tspan>
   </text>
-  <text x="80" y="462" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="26" fill="#AEBBC8">Text, page count and visual snapshots for Pest and PHPUnit. Free, MIT.</text>
+  <text x="80" y="462" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="26" fill="#AEBBC8">PDF text, page counts and snapshots for Pest and PHPUnit. Free, MIT licensed.</text>
   <text x="80" y="560" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="24" fill="#5FD3C6">composer require --dev craigsimps/laravel-pdf-testing</text>
 </svg>
