@@ -5,7 +5,7 @@
 
 # AssertPDF
 
-AssertPDF is a PDF testing toolkit for Laravel. Website: [assertpdf.com](https://assertpdf.com); its source is in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com). Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
+AssertPDF is a PDF testing toolkit for Laravel. The website is [assertpdf.com](https://assertpdf.com), with source in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com). Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
 
 **Release status:** v0.1.0. Laravel is optional, no PDF generator is installed for consumers, and assertions run locally without a hosted service. Free, [MIT licensed](LICENSE).
 
@@ -54,7 +54,7 @@ composer require --dev 'craigsimps/assertpdf:*@dev' -W
 vendor/bin/assertpdf install
 ```
 
-To go back to the published package, remove that repository with `composer config --unset repositories.assertpdf` and require `^0.1` again. The supported installer runs `npm ci --ignore-scripts` against the package's lockfile **inside this package**, not in your application's node_modules. Re-run it after a Composer reinstall or renderer update. Installation requires npm/network access and a writable package directory; assertions do not install anything or access the network. A missing renderer gives an error naming this command. Composer does not run npm automatically.
+To return to the published package, remove the local repository with `composer config --unset repositories.assertpdf` and require `^0.1` again. The supported installer runs `npm ci --ignore-scripts` against the package's lockfile **inside this package**, not in your application's node_modules. Re-run it after a Composer reinstall or renderer update. Installation requires npm/network access and a writable package directory; assertions do not install anything or access the network. A missing renderer gives an error naming this command. Composer does not run npm automatically.
 
 For an existing Pest installation, no registration step is needed. A new Laravel skeleton normally includes PHPUnit, not Pest. On PHP 8.3/8.4, add Pest 3 with `composer require --dev 'pestphp/pest:^3.8' -W`, then `vendor/bin/pest --init`. On PHP 8.4, Pest 4 (`^4.7`) is an alternative; it requires PHPUnit 12. Accept the Pest Composer plugin only if you trust it. Without Pest, use the [PHPUnit equivalents](#phpunit-equivalents) and your existing test runner.
 
@@ -80,7 +80,7 @@ Both readable **local paths** and raw bytes beginning `%PDF-` are accepted. URLs
 
 ## Demo
 
-[craigsimps/assertpdf-demo](https://github.com/craigsimps/assertpdf-demo) is a minimal Laravel app with a real Dompdf invoice endpoint and passing text, page-count and snapshot tests; its README covers setup. The landing site and brand pack live in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com).
+[craigsimps/assertpdf-demo](https://github.com/craigsimps/assertpdf-demo) is a small Laravel app with a Dompdf invoice endpoint and passing PDF tests. Its README covers setup and the text, page-count and snapshot tests. The landing site and brand pack live in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com).
 
 ## Laravel responses
 
