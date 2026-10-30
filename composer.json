@@ -9,15 +9,25 @@
         "symfony/process": "^7.2 || ^8.0"
     },
     "require-dev": {
-        "pestphp/pest": "3.8.6"
+        "barryvdh/laravel-dompdf": "^3.0",
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "3.8.6",
+        "spatie/laravel-pdf": "^1.0"
     },
     "autoload": {
         "psr-4": {"PdfTesting\\": "src/"},
         "files": ["src/expectations.php"]
     },
+    "bin": ["bin/pdf-testing"],
+    "extra": {"laravel": {"providers": ["PdfTesting\\PdfTestingServiceProvider"]}},
+    "suggest": {
+        "illuminate/support": "Optional auto-discovered Laravel provider and configuration (tested on Laravel 12).",
+        "spatie/laravel-pdf": "Assert directly on a PdfBuilder (tested with 1.9).",
+        "barryvdh/laravel-dompdf": "Assert directly on a Dompdf PDF object (tested with 3.1)."
+    },
     "config": {"allow-plugins": {"pestphp/pest-plugin": true}, "sort-packages": true, "platform": {"php": "8.3.0"}},
     "scripts": {
         "test": "pest",
-        "lint": ["find src tests -name '*.php' -print0 | xargs -0 -n1 php -l", "node --check bin/pdf.mjs", "node --check bin/snapshot.mjs", "node --check tests/fixtures/generate.mjs"]
+        "lint": ["find src tests config -name '*.php' -print0 | xargs -0 -n1 php -l", "php -l bin/pdf-testing", "node --check bin/pdf.mjs", "node --check bin/snapshot.mjs", "node --check tests/fixtures/generate.mjs"]
     }
 }

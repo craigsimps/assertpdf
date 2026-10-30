@@ -6,9 +6,12 @@ jobs:
   linux:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    strategy:
+      matrix:
+        optional-generators: [1, 0]
     steps:
       - uses: actions/checkout@v4
       - name: Build pinned PHP and Node test image
-        run: docker build --platform linux/amd64 -f Dockerfile.ci -t pdf-testing-ci .
+        run: docker build --platform linux/amd64 --build-arg OPTIONAL_GENERATORS=${{ matrix.optional-generators }} -f Dockerfile.ci -t pdf-testing-ci .
       - name: Check and test with networking disabled
         run: docker run --rm --network none pdf-testing-ci

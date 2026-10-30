@@ -112,3 +112,31 @@ it('rejects an out-of-bounds mask instead of silently hiding a mistake', functio
         ['page' => 1, 'x' => 290, 'y' => 0, 'width' => 30, 'height' => 20]))
         ->toThrow(RuntimeException::class, 'Mask');
 });
+
+it('leaves the entire baseline untouched when an update fails on a later page', function (bool $existing) {
+    if ($existing) {
+        createPdfBaseline($this->snapshot);
+    }
+    $before = $existing ? [file_get_contents($this->snapshot.'/manifest.json'), file_get_contents($this->snapshot.'/page-1.png')] : null;
+    // First page renders differently, second page refers to a nonexistent object.
+    $pdf = str_replace(['/Kids [4 0 R 6 0 R]', 'Invoice 1001'], ['/Kids [4 0 R 9 0 R]', 'Invoice 9999'],
+        file_get_contents(__DIR__.'/fixtures/two-pages.pdf'));
+    putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');
+    expect(fn () => PdfAssertions::assertPdfMatchesSnapshot($pdf, $this->snapshot))
+        ->toThrow(RuntimeException::class, 'Cannot read PDF:');
+    if ($existing) {
+        expect([file_get_contents($this->snapshot.'/manifest.json'), file_get_contents($this->snapshot.'/page-1.png')])->toBe($before);
+        expect(file_exists($this->snapshot.'/page-2.png'))->toBeFalse();
+    } else {
+        expect(is_dir($this->snapshot))->toBeFalse();
+    }
+    expect(glob($this->snapshot.'.*'))->toBe([]);
+})->with([true, false]);
+
+it('replaces all pages and removes stale pages on a successful update', function () {
+    createPdfBaseline($this->snapshot, 'two-pages');
+    createPdfBaseline($this->snapshot, 'moved');
+    expect(file_exists($this->snapshot.'/page-2.png'))->toBeFalse();
+    PdfAssertions::assertPdfMatchesSnapshot(__DIR__.'/fixtures/moved.pdf', $this->snapshot);
+    expect(glob($this->snapshot.'.*'))->toBe([]);
+});
