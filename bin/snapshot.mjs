@@ -33,15 +33,16 @@ export async function compareSnapshot(document, { directory, mask, maxDiffPixels
   }
   directory = resolve(directory);
   const manifestPath = join(directory, 'manifest.json');
+  let baselineMismatch;
   if (!update && !existsSync(manifestPath)) {
-    return { matches: false, message: `Missing PDF snapshot: ${directory}. Set PDF_TESTING_UPDATE_SNAPSHOTS=1 to create it intentionally.` };
+    baselineMismatch = `Missing PDF snapshot: ${directory}. Set PDF_TESTING_UPDATE_SNAPSHOTS=1 to create it intentionally.`;
   }
-  const manifest = update ? null : JSON.parse(readFileSync(manifestPath, 'utf8'));
+  const manifest = update || baselineMismatch ? null : JSON.parse(readFileSync(manifestPath, 'utf8'));
   if (manifest && JSON.stringify(manifest.renderer) !== JSON.stringify(renderer)) {
-    return { matches: false, message: 'PDF snapshot renderer/platform differs. Review and explicitly update the baseline in the target environment.' };
+    baselineMismatch = 'PDF snapshot renderer/platform differs. Review and explicitly update the baseline in the target environment.';
   }
-  const failures = [];
-  if (manifest && manifest.pages !== document.numPages) {
+  const failures = baselineMismatch ? [baselineMismatch] : [];
+  if (manifest && !baselineMismatch && manifest.pages !== document.numPages) {
     failures.push(`PDF snapshot page count: expected ${manifest.pages}, found ${document.numPages}.`);
   }
   for (let number = 1; number <= document.numPages; number++) {
@@ -54,6 +55,8 @@ export async function compareSnapshot(document, { directory, mask, maxDiffPixels
     const actual = PNG.sync.read(bytes);
     // Validate before persisting; baselines always retain the unmasked pixels.
     applyMask(actual, mask, number);
+    // Read/render every page before reporting a mismatch that Pest's ->not can invert.
+    if (baselineMismatch) continue;
     const baselinePath = join(directory, `page-${number}.png`);
     if (update) {
       mkdirSync(directory, { recursive: true });

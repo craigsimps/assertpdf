@@ -37,6 +37,30 @@ it('never creates a baseline without explicit update permission', function () {
     expect(is_dir($this->snapshot))->toBeFalse();
 });
 
+it('rejects unreadable pages before baseline mismatches regardless of assertion polarity', function (string $baseline, string $assertion, string $fixture, string $kids, string $invalidKids) {
+    if ($baseline === 'incompatible renderer') {
+        createPdfBaseline($this->snapshot, $fixture);
+        $manifestPath = $this->snapshot.'/manifest.json';
+        $manifest = json_decode(file_get_contents($manifestPath), true, flags: JSON_THROW_ON_ERROR);
+        $manifest['renderer']['node'] = 'incompatible';
+        file_put_contents($manifestPath, json_encode($manifest, JSON_THROW_ON_ERROR));
+    }
+    // Equal-length replacements keep xref offsets intact but point to a missing page.
+    $pdf = str_replace($kids, $invalidKids, file_get_contents(__DIR__."/fixtures/{$fixture}.pdf"));
+    expect(function () use ($assertion, $pdf) {
+        match ($assertion) {
+            'PHPUnit' => PdfAssertions::assertPdfMatchesSnapshot($pdf, $this->snapshot),
+            'Pest' => expect($pdf)->toMatchPdfSnapshot($this->snapshot),
+            'negated Pest' => expect($pdf)->not->toMatchPdfSnapshot($this->snapshot),
+        };
+    })->toThrow(RuntimeException::class, 'Cannot read PDF:');
+})->with(['missing manifest', 'incompatible renderer'])
+    ->with(['PHPUnit', 'Pest', 'negated Pest'])
+    ->with([
+        'first page' => ['invoice', '/Kids [4 0 R]', '/Kids [9 0 R]'],
+        'second page' => ['two-pages', '/Kids [4 0 R 6 0 R]', '/Kids [4 0 R 9 0 R]'],
+    ]);
+
 it('creates an explicit baseline and compares identical PDF bytes', function () {
     createPdfBaseline($this->snapshot);
     PdfAssertions::assertPdfMatchesSnapshot(file_get_contents(__DIR__.'/fixtures/invoice.pdf'), $this->snapshot);
