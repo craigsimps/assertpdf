@@ -5,9 +5,9 @@
 
 # AssertPDF
 
-AssertPDF is a PDF testing toolkit for Laravel. The website, [assertpdf.com](https://assertpdf.com), is not live yet. Its source is in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com). Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
+AssertPDF is a PDF testing toolkit for Laravel. Website: [assertpdf.com](https://assertpdf.com); its source is in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com). Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
 
-**Release status:** preparing v0.1.0 (local candidate `v0.1.0-rc.1`). Not published on Packagist yet. Laravel is optional, no PDF generator is installed for consumers, and assertions run locally without a hosted service. Free, [MIT licensed](LICENSE).
+**Release status:** v0.1.0. Laravel is optional, no PDF generator is installed for consumers, and assertions run locally without a hosted service. Free, [MIT licensed](LICENSE).
 
 ```php
 it('renders the invoice correctly', function () {
@@ -37,9 +37,16 @@ CI runs Laravel 12 with PHP 8.3/Pest 3, PHP 8.4/Pest 3 and PHP 8.4/Pest 4, plus 
 
 Install as a **dev dependency** in an existing Laravel 12 app with Pest or PHPUnit. PHP needs the normal extensions required by your test runner (including DOM, mbstring, XML and XMLWriter). Check `php -v`, `node --version` and `npm --version` first.
 
-### Before publication: local checkout
+### Install
 
-Clone this repository into `assertpdf` next to your application. From your **application directory** (adjust the relative path if needed):
+```sh
+composer require --dev 'craigsimps/assertpdf:^0.1' -W
+vendor/bin/assertpdf install
+```
+
+### Developing against a local checkout
+
+To test unreleased changes, clone this repository into `assertpdf` next to your application and point Composer at it. From your **application directory** (adjust the relative path if needed):
 
 ```sh
 composer config repositories.assertpdf '{"type":"path","url":"../assertpdf","options":{"symlink":false}}'
@@ -47,15 +54,7 @@ composer require --dev 'craigsimps/assertpdf:*@dev' -W
 vendor/bin/assertpdf install
 ```
 
-### After v0.1.0 is published: Packagist (not available yet)
-
-```sh
-# Only after Craig publishes the package:
-composer require --dev 'craigsimps/assertpdf:^0.1' -W
-vendor/bin/assertpdf install
-```
-
-If migrating from the local setup, remove its repository first with `composer config --unset repositories.assertpdf`. The supported installer runs `npm ci --ignore-scripts` against the package's lockfile **inside this package**, not in your application's node_modules. Re-run it after a Composer reinstall or renderer update. Installation requires npm/network access and a writable package directory; assertions do not install anything or access the network. A missing renderer gives an error naming this command. Composer does not run npm automatically.
+To go back to the published package, remove that repository with `composer config --unset repositories.assertpdf` and require `^0.1` again. The supported installer runs `npm ci --ignore-scripts` against the package's lockfile **inside this package**, not in your application's node_modules. Re-run it after a Composer reinstall or renderer update. Installation requires npm/network access and a writable package directory; assertions do not install anything or access the network. A missing renderer gives an error naming this command. Composer does not run npm automatically.
 
 For an existing Pest installation, no registration step is needed. A new Laravel skeleton normally includes PHPUnit, not Pest. On PHP 8.3/8.4, add Pest 3 with `composer require --dev 'pestphp/pest:^3.8' -W`, then `vendor/bin/pest --init`. On PHP 8.4, Pest 4 (`^4.7`) is an alternative; it requires PHPUnit 12. Accept the Pest Composer plugin only if you trust it. Without Pest, use the [PHPUnit equivalents](#phpunit-equivalents) and your existing test runner.
 
@@ -81,7 +80,7 @@ Both readable **local paths** and raw bytes beginning `%PDF-` are accepted. URLs
 
 ## Demo
 
-**TODO — public URL placeholder, not live:** [assertpdf-demo](https://github.com/craigsimps/assertpdf-demo). No remote demo repository has been created. The review app currently lives locally at `../laravel-pdf-testing-demo`; its README covers setup, a real Dompdf invoice endpoint and package tests. The landing site and brand pack live in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com).
+[craigsimps/assertpdf-demo](https://github.com/craigsimps/assertpdf-demo) is a minimal Laravel app with a real Dompdf invoice endpoint and passing text, page-count and snapshot tests; its README covers setup. The landing site and brand pack live in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com).
 
 ## Laravel responses
 
@@ -213,6 +212,6 @@ The images pin PHP 8.3.30 / 8.4.19, Node 24.21.0 and Composer 2.8.9 by image dig
 
 ## Release and feedback
 
-See [CHANGELOG.md](CHANGELOG.md) for the planned v0.1.0 contents and [release readiness](docs/launch/release-readiness.md) for identity, licence review and remaining publication gates. During 0.x, minor releases may contain breaking changes; patch releases are fixes. Pin `^0.1` to stay within the first minor line, and review snapshots explicitly after any renderer update.
+See [CHANGELOG.md](CHANGELOG.md) for the v0.1.0 contents and [release readiness](docs/launch/release-readiness.md) for identity, licence review and the publication gates. During 0.x, minor releases may contain breaking changes; patch releases are fixes. Pin `^0.1` to stay within the first minor line, and review snapshots explicitly after any renderer update.
 
 After public launch, report a small reproducible PDF/test and runtime versions in [GitHub issues](https://github.com/craigsimps/assertpdf/issues), using synthetic data rather than customer invoices. No telemetry is collected by the toolkit. Release, demo publication and landing-page go-live still require Craig's approval.

@@ -1,6 +1,6 @@
 # Launch drafts — Craig sends, nothing posted
 
-Prepared 2026-10-30. **Do not send before public release approval.** Replace `[PACKAGE_URL]`, `[REPO_URL]` and `[DEMO_URL]` with verified public links. Expected package/repo URLs are `https://packagist.org/packages/craigsimps/assertpdf` and `https://github.com/craigsimps/assertpdf`; neither public availability nor Packagist publication is asserted today. Demo URL remains a TODO. Check each destination's current submission rules before sending; no account, submission or contact is part of this assignment.
+Prepared 2026-10-30; URLs filled in for go-live on 2026-10-30. **Send only after the repositories are public and the package is on Packagist.** Check each destination's current submission rules before sending; no account, submission or contact is part of this assignment.
 
 ## Laravel News tip
 
@@ -19,9 +19,9 @@ expect($this->get('/invoices/1001/pdf'))
 
 It accepts Laravel responses, local files and bytes, with optional Spatie Laravel PDF/Dompdf object inputs. The toolkit renderer needs Node 24.21.0, but no browser or hosted service; assertions run offline after installation. Visual baselines must be explicitly created/reviewed on the same renderer environment used in CI.
 
-Docs/source: [REPO_URL]
-Package: [PACKAGE_URL]
-Minimal invoice demo and tests: [DEMO_URL]
+Docs/source: https://github.com/craigsimps/assertpdf
+Package: https://packagist.org/packages/craigsimps/assertpdf
+Minimal invoice demo and tests: https://github.com/craigsimps/assertpdf-demo
 
 Thanks,
 Craig
@@ -40,7 +40,7 @@ expect($this->get('/invoices/1001/pdf'))
 
 After installation, `->toMatchPdfSnapshot('invoice-1001')` can also compare rendered pages. Baseline updates are explicit, with actual/diff PNGs on failure. It supports Laravel 12, PHP 8.3/8.4 and compatible Pest 3/4 or PHPUnit 11.5/12. A pinned Node renderer is required; no toolkit-hosted service, OCR or promise of cross-OS pixel-identical snapshots.
 
-Source/install: [REPO_URL] · Package: [PACKAGE_URL] · Runnable invoice demo: [DEMO_URL]
+Source/install: https://github.com/craigsimps/assertpdf · Package: https://packagist.org/packages/craigsimps/assertpdf · Runnable invoice demo: https://github.com/craigsimps/assertpdf-demo
 
 I'm the author. What PDF regression would you most want a test to catch? Reproducible install/correctness reports are particularly useful; please use synthetic invoices, not customer data. This complements generator fakes rather than replacing them.
 
@@ -50,6 +50,6 @@ Free MIT dev package: test the PDF Laravel actually emits.
 
 Pest/PHPUnit assertions for text, page count and opt-in visual snapshots. Local Node renderer; offline assertions. Complements PDF fakes.
 
-Docs + invoice demo: [REPO_URL]
+Docs + invoice demo: https://github.com/craigsimps/assertpdf
 
 Before sending, check the final text/link length fits the account's limit. No claims about users, adoption or performance have been invented.
