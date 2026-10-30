@@ -4,14 +4,37 @@ permissions:
   contents: read
 jobs:
   linux:
+    name: PHP ${{ matrix.php }} / Pest ${{ matrix.pest }} / generators ${{ matrix.optional-generators }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     strategy:
+      fail-fast: false
       matrix:
-        optional-generators: [1, 0]
+        include:
+          - php: '8.3.30'
+            php-image: php:8.3.30-cli-bookworm@sha256:68e9d207ef1afe71769cbcf17fd671c7f565ad1cad8bdfb02c710eb84da50da1
+            pest: '3.8.6'
+            optional-generators: 1
+          - php: '8.3.30'
+            php-image: php:8.3.30-cli-bookworm@sha256:68e9d207ef1afe71769cbcf17fd671c7f565ad1cad8bdfb02c710eb84da50da1
+            pest: '3.8.6'
+            optional-generators: 0
+          - php: '8.4.19'
+            php-image: php:8.4.19-cli-bookworm@sha256:3ddb5a91b44a1c922538576d73a6e808fb2438d9d2d65b1fc3ffd55619fac2e3
+            pest: '3.8.6'
+            optional-generators: 1
+          - php: '8.4.19'
+            php-image: php:8.4.19-cli-bookworm@sha256:3ddb5a91b44a1c922538576d73a6e808fb2438d9d2d65b1fc3ffd55619fac2e3
+            pest: '4.7.8'
+            optional-generators: 1
     steps:
       - uses: actions/checkout@v4
       - name: Build pinned PHP and Node test image
-        run: docker build --platform linux/amd64 --build-arg OPTIONAL_GENERATORS=${{ matrix.optional-generators }} -f Dockerfile.ci -t pdf-testing-ci .
+        run: >-
+          docker build --platform linux/amd64
+          --build-arg PHP_IMAGE=${{ matrix.php-image }}
+          --build-arg PEST_VERSION=${{ matrix.pest }}
+          --build-arg OPTIONAL_GENERATORS=${{ matrix.optional-generators }}
+          -f Dockerfile.ci -t pdf-testing-ci .
       - name: Check and test with networking disabled
         run: docker run --rm --network none pdf-testing-ci
