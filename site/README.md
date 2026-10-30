@@ -52,15 +52,19 @@ Create the project from this repository with these values. Nothing here creates 
 
 `SITE_URL` feeds the canonical link, Open Graph URLs and the sitemap. Until it is set, the build uses the placeholder `https://laravel-pdf-testing.pages.dev`, which also appears in `public/robots.txt`; update both when the real origin is known.
 
-## Before launch
+## Go-live settings
 
-Search `src/pages/index.astro` for `TODO-` and resolve each item:
+The page is written as if the package is already on Packagist and the demo repository is public, because both happen before the site goes live. These non-visible settings still need real values at go-live:
 
-- `TODO-DEMO`: the demo link points at the README's demo section until the demo repository is public.
-- `TODO-PACKAGIST`: the install command assumes `craigsimps/laravel-pdf-testing` is on Packagist.
-- `TODO-ANALYTICS`: analytics are out of scope until Craig decides; the GoatCounter snippet from the approved page is kept as a comment in the source and is not emitted.
+| Where | Setting | Today | At go-live |
+| --- | --- | --- | --- |
+| Cloudflare build environment | `SITE_URL` | unset; `astro.config.mjs` falls back to `https://laravel-pdf-testing.pages.dev` | the final origin, which feeds the canonical link, Open Graph URLs and the sitemap |
+| `public/robots.txt` | `Sitemap:` line | the same placeholder origin | the final origin |
+| `src/pages/index.astro` | `TODO-DEMO`: `href` of the demo button (`id="demo-todo"`) | the README's demo section | the public demo repository URL |
+| `src/pages/index.astro` | `TODO-PACKAGIST` | install command assumes `craigsimps/laravel-pdf-testing:^0.1` is published | publish first, then deploy |
+| `src/pages/index.astro` | `TODO-ANALYTICS` | GoatCounter snippet kept as a source comment, not emitted | Craig's decision; the CSP in `public/_headers` needs a `script-src` entry if enabled |
 
-Astro strips HTML comments from the output, so these notes never reach visitors.
+Search `src/pages/index.astro` for `TODO-` to find each marker. Astro strips HTML comments from the output, so these notes never reach visitors.
 
 ## Checks
 

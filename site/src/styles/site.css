@@ -214,9 +214,15 @@ pre code { font-size: inherit; }
 @media (min-width: 640px) { .pane { padding: 2.5rem 1.5rem; } }
 .pane-code { background: var(--paper-2); border-top: 1px solid var(--line); }
 .pane-term { background: var(--ground); color: var(--ground-text); }
-.pane-inner { max-width: calc(var(--wrap) / 2 - 1.5rem); display: flex; flex-direction: column; gap: 0.75rem; }
-.pane-code .pane-inner { margin-left: auto; }
-.pane-term .pane-inner { margin-right: auto; }
+.pane-inner { display: flex; flex-direction: column; gap: 0.75rem; }
+/* Each pane's content sits in its half of the shared content column: the pane padding (1.5rem) plus
+   the wrap padding (1.5rem) come off half the wrap width, so the code's left edge and the terminal's
+   right edge land exactly on the column edges. Below 900px the panes stack and simply use the pane padding. */
+@media (min-width: 900px) {
+  .pane-inner { max-width: calc(var(--wrap) / 2 - 3rem); }
+  .pane-code .pane-inner { margin-left: auto; }
+  .pane-term .pane-inner { margin-right: auto; }
+}
 .pane-title { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--ink-3); }
 .pane-term .pane-title { color: var(--ground-text-2); }
 .pane pre { border: 0; background: transparent; padding: 0; }
