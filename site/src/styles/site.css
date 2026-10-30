@@ -249,7 +249,6 @@ pre code { font-size: inherit; }
 .install .muted { color: var(--ground-text-2); }
 .install a:not(.button) { color: var(--ground-teal); }
 .install ul { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.375rem; font-size: 0.9375rem; }
-.install .eyebrow { color: var(--ground-teal); }
 .install .note { border: 1px solid var(--ground-teal); color: #FFFFFF; background: transparent; }
 .install .note strong { color: var(--ground-teal); }
 
