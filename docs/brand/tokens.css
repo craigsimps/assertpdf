@@ -1,5 +1,5 @@
 /*
- * Laravel PDF Testing brand tokens.
+ * AssertPDF brand tokens.
  * Source of truth for colour, type and shape. The Astro site imports this file directly and
  * defines no colours of its own. Contrast ratios are listed in docs/brand/README.md and checked
  * by `node docs/brand/contrast.mjs`.

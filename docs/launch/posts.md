@@ -1,10 +1,10 @@
 # Launch drafts — Craig sends, nothing posted
 
-Prepared 2026-10-30. **Do not send before public release approval.** Replace `[PACKAGE_URL]`, `[REPO_URL]` and `[DEMO_URL]` with verified public links. Expected package/repo URLs are `https://packagist.org/packages/craigsimps/laravel-pdf-testing` and `https://github.com/craigsimps/laravel-pdf-testing`; neither public availability nor Packagist publication is asserted today. Demo URL remains a TODO. Check each destination's current submission rules before sending; no account, submission or contact is part of this assignment.
+Prepared 2026-10-30. **Do not send before public release approval.** Replace `[PACKAGE_URL]`, `[REPO_URL]` and `[DEMO_URL]` with verified public links. Expected package/repo URLs are `https://packagist.org/packages/craigsimps/assertpdf` and `https://github.com/craigsimps/assertpdf`; neither public availability nor Packagist publication is asserted today. Demo URL remains a TODO. Check each destination's current submission rules before sending; no account, submission or contact is part of this assignment.
 
 ## Laravel News tip
 
-**Subject:** Free Laravel PDF testing assertions for the actual generated document
+**Subject:** AssertPDF: free PDF testing assertions for the document your Laravel app generates
 
 Hi Laravel News team,
 

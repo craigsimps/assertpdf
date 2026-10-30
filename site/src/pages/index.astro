@@ -1,38 +1,38 @@
 ---
 import Base from '../layouts/Base.astro';
 import { withRef } from '../lib/links.js';
-const title = 'Laravel PDF Testing: test the PDF your app generates';
+const title = 'AssertPDF: test the PDF your app generates';
 const description = 'Free, MIT-licensed PDF assertions for Pest and PHPUnit. Check the text, count the pages and compare rendered snapshots.';
 ---
 <Base title={title} description={description}>
 <!--
   LAUNCH CHECKLIST (remove when done):
   1. TODO-DEMO: point the demo button (id="demo-todo") at the public demo repository URL.
-  2. TODO-PACKAGIST: the page is written as already published; publish craigsimps/laravel-pdf-testing before go-live.
+  2. TODO-PACKAGIST: the page is written as already published; publish craigsimps/assertpdf before go-live.
   3. TODO-ANALYTICS: Cloudflare Web Analytics, enabled in the Cloudflare dashboard at go-live; no site code.
-     See site/README.md, go-live settings (the CSP in public/_headers must allow the beacon).
-  Copy for this page lives in this file only. Styling is in styles.css.
+     See site/README.md, go-live settings (the CSP in public/_headers must allow the beacon; no source snippet needed).
+  Copy for this page lives in this file only. Styling is in src/styles/site.css; colours come from docs/brand/tokens.css.
   The invoice pages in the hero are drawn in HTML; the numbers in them are sample data, not measurements.
 -->
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header on-ground">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Laravel PDF Testing, top of page">
+    <a class="brand" href="#top" aria-label="AssertPDF, top of page">
       <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
         <path class="page" d="M8 3h12l6 6v18a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke-width="2" stroke-linejoin="round"/>
         <path class="page" d="M20 3v6h6" stroke-width="2" stroke-linejoin="round"/>
         <path class="page" d="M11 14h7M11 18h10" stroke-width="2" stroke-linecap="round"/>
         <path class="tick" d="M11 24l3 3 6-6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Laravel PDF Testing
+      AssertPDF
     </a>
     <nav class="site-nav" aria-label="Page sections">
       <ul>
         <li><a href="#checks">What it checks</a></li>
         <li><a href="#install">Install</a></li>
         <li><a href="#demo">Demo</a></li>
-        <li><a href={withRef('https://github.com/craigsimps/laravel-pdf-testing')}>GitHub</a></li>
+        <li><a href={withRef('https://github.com/craigsimps/assertpdf')}>GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -174,9 +174,9 @@ const description = 'Free, MIT-licensed PDF assertions for Pest and PHPUnit. Che
       <div class="col">
         <h2 class="titled" id="install-title">Install</h2>
         <p>Add it to an existing Laravel 12 app with Pest or PHPUnit. The second command installs the pinned renderer inside the package. Installation needs network access. Assertions run offline.</p>
-        <pre class="terminal" tabindex="0" aria-label="Install commands"><code><span class="dim">$</span> composer require --dev 'craigsimps/laravel-pdf-testing:^0.1' -W
-<span class="dim">$</span> vendor/bin/pdf-testing install</code></pre>
-        <p class="muted">Existing Pest installations need no registration step. Use your own PDF generator. Full details in the <a href={withRef('https://github.com/craigsimps/laravel-pdf-testing#requirements-and-installation')}>README</a>.</p>
+        <pre class="terminal" tabindex="0" aria-label="Install commands"><code><span class="dim">$</span> composer require --dev 'craigsimps/assertpdf:^0.1' -W
+<span class="dim">$</span> vendor/bin/assertpdf install</code></pre>
+        <p class="muted">Existing Pest installations need no registration step. Use your own PDF generator. Full details in the <a href={withRef('https://github.com/craigsimps/assertpdf#requirements-and-installation')}>README</a>.</p>
       </div>
       <div class="col">
         <h3>You need</h3>
@@ -198,7 +198,7 @@ const description = 'Free, MIT-licensed PDF assertions for Pest and PHPUnit. Che
         <h2 class="titled" id="demo-title">A complete example</h2>
         <p>A small Laravel app with an invoice PDF route and passing PDF tests. You can clone it and change the invoice to see which tests fail.</p>
         <!-- TODO-DEMO: replace the href with the verified public demo repository URL. -->
-        <div class="actions"><a class="button button-secondary" id="demo-todo" href={withRef('https://github.com/craigsimps/laravel-pdf-testing#demo')}>Read about the demo</a></div>
+        <div class="actions"><a class="button button-secondary" id="demo-todo" href={withRef('https://github.com/craigsimps/assertpdf#demo')}>Read about the demo</a></div>
       </div>
       <div class="col">
         <h3>You control snapshot updates</h3>
@@ -208,7 +208,7 @@ const description = 'Free, MIT-licensed PDF assertions for Pest and PHPUnit. Che
             <span class="step-n">01</span>
             <div class="step-body">
               <p><strong>Create the baseline explicitly.</strong></p>
-              <pre tabindex="0" aria-label="Create a baseline"><code>PDF_TESTING_UPDATE_SNAPSHOTS=1 vendor/bin/pest --filter='approved layout'</code></pre>
+              <pre tabindex="0" aria-label="Create a baseline"><code>ASSERTPDF_UPDATE_SNAPSHOTS=1 vendor/bin/pest --filter='approved layout'</code></pre>
             </div>
           </li>
           <li class="step">
@@ -247,7 +247,7 @@ const description = 'Free, MIT-licensed PDF assertions for Pest and PHPUnit. Che
 
 <footer class="site-footer on-ground">
   <div class="wrap">
-    <p>MIT licensed. Source, changelog and issues on <a href={withRef('https://github.com/craigsimps/laravel-pdf-testing')}>GitHub</a>.</p>
+    <p>MIT licensed. Source, changelog and issues on <a href={withRef('https://github.com/craigsimps/assertpdf')}>GitHub</a>.</p>
     <p>Laravel is a trademark of Taylor Otwell. This package is independent and not endorsed by Laravel.</p>
   </div>
 </footer>

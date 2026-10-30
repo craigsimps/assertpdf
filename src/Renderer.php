@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PdfTesting;
+namespace AssertPdf;
 
 use Symfony\Component\Process\Process;
 
@@ -19,7 +19,7 @@ final class Renderer
     {
         foreach (['pdfjs-dist', '@napi-rs/canvas', 'pixelmatch', 'pngjs'] as $package) {
             if (!is_file(dirname(__DIR__).'/node_modules/'.$package.'/package.json')) {
-                throw new \RuntimeException('PDF renderer is not installed. Run vendor/bin/pdf-testing install (or php artisan pdf-testing:install).');
+                throw new \RuntimeException('PDF renderer is not installed. Run vendor/bin/assertpdf install (or php artisan assertpdf:install).');
             }
         }
     }

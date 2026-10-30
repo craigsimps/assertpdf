@@ -3,9 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 // Canonical origin for <link rel="canonical">, Open Graph URLs, the sitemap and robots.txt.
-// PLACEHOLDER until Craig creates the Cloudflare Pages project or connects a domain:
-// set SITE_URL in the Cloudflare build environment (see README.md) to override it.
-const site = process.env.SITE_URL ?? 'https://laravel-pdf-testing.pages.dev';
+// assertpdf.com is the registered domain; set SITE_URL in a Cloudflare preview environment to override it.
+const site = process.env.SITE_URL ?? 'https://assertpdf.com';
 
 export default defineConfig({
   site,

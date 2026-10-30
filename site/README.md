@@ -1,6 +1,6 @@
 # Landing site (Astro)
 
-The static landing page for `craigsimps/laravel-pdf-testing`, built with [Astro](https://astro.build) and ready for Cloudflare Pages. It reproduces the design approved on 2026-10-30 ([issue #3](https://github.com/craigsimps/laravel-pdf-testing/issues/3)) and replaces the hand-written `docs/site/` page; see [issue #6](https://github.com/craigsimps/laravel-pdf-testing/issues/6).
+The static landing page for `craigsimps/assertpdf`, built with [Astro](https://astro.build) and ready for Cloudflare Pages. It reproduces the design approved on 2026-10-30 ([issue #3](https://github.com/craigsimps/assertpdf/issues/3)) and replaces the hand-written `docs/site/` page; see [issue #6](https://github.com/craigsimps/assertpdf/issues/6).
 
 This folder is excluded from Composer archives by `.gitattributes`.
 
@@ -12,7 +12,7 @@ This folder is excluded from Composer archives by `.gitattributes`.
 | `src/pages/404.astro` | Not-found page. |
 | `src/lib/links.js` | `REF` (`site`) and `withRef()`, which appends `ref=site` to every link that leaves the site for GitHub. |
 | `src/layouts/Base.astro` | Document shell: meta, canonical, Open Graph, font preloads, stylesheet imports. |
-| `src/styles/site.css` | Component rules from the approved page plus three site-only variables. |
+| `src/styles/site.css` | Component rules from the approved page plus the site width variable (`--wrap`). |
 | `src/styles/fonts.css` | `@font-face` rules for the self-hosted fonts. |
 | `../docs/brand/tokens.css` | Source of truth for colours, type and shape; imported first by the layout. Do not copy its values here. |
 | `public/fonts/` | IBM Plex Sans 400/500/600 and IBM Plex Mono 400 (latin woff2) with their SIL OFL 1.1 licences. |
@@ -48,10 +48,10 @@ Create the project from this repository with these values. Nothing here creates 
 | Build command | `npm run build` |
 | Build output directory | `dist` |
 | Node version | `24.21.0` (read from `site/.node-version`, or set `NODE_VERSION=24.21.0`) |
-| Environment variable | `SITE_URL=https://<final-domain>` once the domain is known |
+| Environment variable | `SITE_URL` only for preview environments; production uses `https://assertpdf.com` |
 | Production branch | `main` |
 
-`SITE_URL` feeds the canonical link, Open Graph URLs and the sitemap. Until it is set, the build uses the placeholder `https://laravel-pdf-testing.pages.dev`, which also appears in `public/robots.txt`; update both when the real origin is known.
+`SITE_URL` feeds the canonical link, Open Graph URLs and the sitemap. The build defaults to `https://assertpdf.com`, which also appears in `public/robots.txt`.
 
 ## Go-live settings
 
@@ -59,11 +59,11 @@ The page assumes the package is on Packagist and the demo repository is public. 
 
 | Where | Setting | Today | At go-live |
 | --- | --- | --- | --- |
-| Cloudflare build environment | `SITE_URL` | unset; `astro.config.mjs` falls back to `https://laravel-pdf-testing.pages.dev` | the final origin, which feeds the canonical link, Open Graph URLs and the sitemap |
-| `public/robots.txt` | `Sitemap:` line | the same placeholder origin | the final origin |
+| Cloudflare build environment | `SITE_URL` | unset; `astro.config.mjs` uses `https://assertpdf.com` | leave unset for production; set it in a preview environment so canonical and Open Graph URLs point at the preview |
+| `public/robots.txt` | `Sitemap:` line | `https://assertpdf.com/sitemap-index.xml` | no change unless the domain changes |
 | `src/pages/index.astro` | `TODO-DEMO`: `href` of the demo button (`id="demo-todo"`) | the README's demo section | the public demo repository URL, passed through `withRef()` like the other GitHub links |
-| `src/pages/index.astro` | `TODO-PACKAGIST` | install command assumes `craigsimps/laravel-pdf-testing:^0.1` is published | publish first, then deploy |
-| Cloudflare dashboard | Web Analytics (`TODO-ANALYTICS` in `src/pages/index.astro`) | off | enable Cloudflare Web Analytics for the Pages project in the dashboard; it needs no site code. Cloudflare injects its beacon at the edge, so add `script-src https://static.cloudflareinsights.com` and `connect-src https://cloudflareinsights.com` to the CSP in `public/_headers` |
+| `src/pages/index.astro` | `TODO-PACKAGIST` | install command assumes `craigsimps/assertpdf:^0.1` is published | publish first, then deploy |
+| Cloudflare dashboard | Web Analytics (`TODO-ANALYTICS` in `src/pages/index.astro`) | off | enable Cloudflare Web Analytics for the Pages project in the dashboard; it needs no site code or source snippet. Cloudflare injects its beacon at the edge, so in the CSP in `public/_headers` replace `script-src 'none'` with `script-src https://static.cloudflareinsights.com` and add `connect-src 'self' https://cloudflareinsights.com` |
 
 Search `src/pages/index.astro` for `TODO-` to find each marker. Astro strips HTML comments from the output, so these notes never reach visitors.
 

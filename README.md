@@ -1,6 +1,6 @@
-# Laravel PDF testing toolkit
+# AssertPDF
 
-Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
+AssertPDF is a PDF testing toolkit for Laravel. Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
 
 **Release status:** preparing v0.1.0 (local candidate `v0.1.0-rc.1`). Not published on Packagist yet. Laravel is optional, no PDF generator is installed for consumers, and assertions run locally without a hosted service. Free, [MIT licensed](LICENSE).
 
@@ -34,27 +34,27 @@ Install as a **dev dependency** in an existing Laravel 12 app with Pest or PHPUn
 
 ### Before publication: local checkout
 
-Place this toolkit next to your application and check out `milestone-3-release-readiness`. From your **application directory** (adjust the relative path if needed):
+Clone this repository next to your application (the folder is `assertpdf`). From your **application directory** (adjust the relative path if needed):
 
 ```sh
-composer config repositories.pdf-testing '{"type":"path","url":"../laravel-pdf-testing","options":{"symlink":false}}'
-composer require --dev 'craigsimps/laravel-pdf-testing:dev-milestone-3-release-readiness' -W
-vendor/bin/pdf-testing install
+composer config repositories.assertpdf '{"type":"path","url":"../assertpdf","options":{"symlink":false}}'
+composer require --dev 'craigsimps/assertpdf:*@dev' -W
+vendor/bin/assertpdf install
 ```
 
 ### After v0.1.0 is published: Packagist (not available yet)
 
 ```sh
 # Only after Craig publishes the package:
-composer require --dev 'craigsimps/laravel-pdf-testing:^0.1' -W
-vendor/bin/pdf-testing install
+composer require --dev 'craigsimps/assertpdf:^0.1' -W
+vendor/bin/assertpdf install
 ```
 
-If migrating from the local setup, remove its repository first with `composer config --unset repositories.pdf-testing`. The supported installer runs `npm ci --ignore-scripts` against the package's lockfile **inside this package**, not in your application's node_modules. Re-run it after a Composer reinstall or renderer update. Installation requires npm/network access and a writable package directory; assertions do not install anything or access the network. A missing renderer gives an error naming this command. Composer does not run npm automatically.
+If migrating from the local setup, remove its repository first with `composer config --unset repositories.assertpdf`. The supported installer runs `npm ci --ignore-scripts` against the package's lockfile **inside this package**, not in your application's node_modules. Re-run it after a Composer reinstall or renderer update. Installation requires npm/network access and a writable package directory; assertions do not install anything or access the network. A missing renderer gives an error naming this command. Composer does not run npm automatically.
 
 For an existing Pest installation, no registration step is needed. A new Laravel skeleton normally includes PHPUnit, not Pest. On PHP 8.3/8.4, add Pest 3 with `composer require --dev 'pestphp/pest:^3.8' -W`, then `vendor/bin/pest --init`. On PHP 8.4, Pest 4 (`^4.7`) is an alternative; it requires PHPUnit 12. Accept the Pest Composer plugin only if you trust it. Without Pest, use the [PHPUnit equivalents](#phpunit-equivalents) and your existing test runner.
 
-In Laravel, the auto-discovered provider also exposes `php artisan pdf-testing:install` as an alias. If package discovery is disabled, register `PdfTesting\PdfTestingServiceProvider` in your app's providers manually, or use the standalone command. Tested integration: Laravel 12 / Testbench 10, Spatie Laravel PDF 1.9 and Laravel-Dompdf 3.1.
+In Laravel, the auto-discovered provider also exposes `php artisan assertpdf:install` as an alias. If package discovery is disabled, register `AssertPdf\AssertPdfServiceProvider` in your app's providers manually, or use the standalone command. Tested integration: Laravel 12 / Testbench 10, Spatie Laravel PDF 1.9 and Laravel-Dompdf 3.1.
 
 ## Pest: text, pages and a visual snapshot
 
@@ -76,7 +76,7 @@ Both readable **local paths** and raw bytes beginning `%PDF-` are accepted. URLs
 
 ## Demo
 
-**TODO — public URL placeholder, not live:** [laravel-pdf-testing-demo](https://github.com/craigsimps/laravel-pdf-testing-demo). No remote demo repository has been created. The review app currently lives locally at `../laravel-pdf-testing-demo`; its README covers setup, a real Dompdf invoice endpoint and package tests. Branding, demo styling and the landing page are a separate design handoff.
+**TODO — public URL placeholder, not live:** [assertpdf-demo](https://github.com/craigsimps/assertpdf-demo). No remote demo repository has been created. The review app currently lives locally at `../laravel-pdf-testing-demo`; its README covers setup, a real Dompdf invoice endpoint and package tests. Branding, demo styling and the landing page are a separate design handoff.
 
 ## Laravel responses
 
@@ -119,10 +119,10 @@ The toolkit does not install Chrome/Puppeteer for Spatie or change generator set
 With the provider loaded, relative snapshot names are resolved beneath `tests/pdf-snapshots`. Absolute directories retain their existing meaning. Without Laravel/provider configuration, relative paths remain relative to the working directory and the pixel allowance stays zero.
 
 ```sh
-php artisan vendor:publish --tag=pdf-testing-config
+php artisan vendor:publish --tag=assertpdf-config
 ```
 
-`config/pdf-testing.php`:
+`config/assertpdf.php`:
 
 ```php
 return [
@@ -138,7 +138,7 @@ An explicit `maxDiffPixels` argument overrides configuration, including an expli
 Missing baselines **fail**. Create or replace them intentionally:
 
 ```sh
-PDF_TESTING_UPDATE_SNAPSHOTS=1 vendor/bin/pest --filter='renders the invoice correctly'
+ASSERTPDF_UPDATE_SNAPSHOTS=1 vendor/bin/pest --filter='renders the invoice correctly'
 vendor/bin/pest --filter='renders the invoice correctly'
 ```
 
@@ -163,7 +163,7 @@ Coordinates are **integer pixels at 72 DPI**, from the **top-left of the rendere
 ## PHPUnit equivalents
 
 ```php
-use PdfTesting\PdfAssertions;
+use AssertPdf\PdfAssertions;
 
 PdfAssertions::assertPdfContainsText($pdf, 'Invoice 1001');
 PdfAssertions::assertPdfPageCount($pdf, 1);
@@ -183,7 +183,7 @@ PdfAssertions::assertPdfMatchesSnapshot($pdf, __DIR__.'/pdf-snapshots/invoice-10
 
 ```sh
 composer install
-php bin/pdf-testing install
+php bin/assertpdf install
 composer validate --strict
 composer lint
 composer test
@@ -197,11 +197,11 @@ The installation smoke creates disposable standalone and Testbench consumers: it
 The same Linux/amd64 checks used by `.github/workflows/tests.yml` can run locally:
 
 ```sh
-docker build --platform linux/amd64 -f Dockerfile.ci -t pdf-testing-ci .
-docker run --rm --network none pdf-testing-ci
+docker build --platform linux/amd64 -f Dockerfile.ci -t assertpdf-ci .
+docker run --rm --network none assertpdf-ci
 # Repeat without either optional generator installed:
-docker build --platform linux/amd64 --build-arg OPTIONAL_GENERATORS=0 -f Dockerfile.ci -t pdf-testing-ci-minimal .
-docker run --rm --network none pdf-testing-ci-minimal
+docker build --platform linux/amd64 --build-arg OPTIONAL_GENERATORS=0 -f Dockerfile.ci -t assertpdf-ci-minimal .
+docker run --rm --network none assertpdf-ci-minimal
 ```
 
 The images pin PHP 8.3.30 / 8.4.19, Node 24.21.0 and Composer 2.8.9 by image digest on Debian Bookworm. To reproduce another matrix row, pass its `PHP_IMAGE` and `PEST_VERSION` build arguments from [the workflow](.github/workflows/tests.yml). Pest 4 is resolved in the image with a PHP 8.4 Composer platform, without changing the toolkit's committed Pest 3 lockfile. Generator absence skips only the two generator-specific tests. Installation checks run during the networked image build; the full assertion suites run with networking disabled. A local container run is **not** a hosted GitHub Actions run.
@@ -210,4 +210,4 @@ The images pin PHP 8.3.30 / 8.4.19, Node 24.21.0 and Composer 2.8.9 by image dig
 
 See [CHANGELOG.md](CHANGELOG.md) for the planned v0.1.0 contents and [release readiness](docs/launch/release-readiness.md) for identity, licence review and remaining publication gates. During 0.x, minor releases may contain breaking changes; patch releases are fixes. Pin `^0.1` to stay within the first minor line, and review snapshots explicitly after any renderer update.
 
-After public launch, report a small reproducible PDF/test and runtime versions in [GitHub issues](https://github.com/craigsimps/laravel-pdf-testing/issues), using synthetic data rather than customer invoices. No telemetry is collected by the toolkit. Release, demo publication and landing-page go-live still require Craig's approval.
+After public launch, report a small reproducible PDF/test and runtime versions in [GitHub issues](https://github.com/craigsimps/assertpdf/issues), using synthetic data rather than customer invoices. No telemetry is collected by the toolkit. Release, demo publication and landing-page go-live still require Craig's approval.

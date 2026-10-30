@@ -1,6 +1,6 @@
-# Laravel PDF Testing: brand identity pack
+# AssertPDF: brand identity pack
 
-Version 0.1, prepared 2026-10-30 for [milestone 3, part 2](https://github.com/craigsimps/laravel-pdf-testing/issues/3). This pack is the source for the landing page in `site/` and for any README, demo or social artwork. Publication requires Craig’s approval.
+Version 0.1, prepared 2026-10-30 for [milestone 3, part 2](https://github.com/craigsimps/assertpdf/issues/3). This pack is the source for the landing page in `site/` and for any README, demo or social artwork. Publication requires Craig’s approval.
 
 Copy edited by Codex in a separate session. Independent design review is still required before acceptance.
 
@@ -38,7 +38,7 @@ The font files live with the site at `site/public/fonts/`, next to their licence
 
 ## 2. Name and mark
 
-**Name.** "Laravel PDF Testing" in prose and in the wordmark. The package is `craigsimps/laravel-pdf-testing`; the binary and config key are `pdf-testing`. Do not shorten to "LPT" or stylise the capitals.
+**Name.** "AssertPDF" in prose and in the wordmark. The package is `craigsimps/assertpdf`; the binary and config key are `assertpdf`. Do not shorten to "LPT" or stylise the capitals.
 
 **Mark.** A page with a folded corner, two text lines and a tick: a document that has been read and checked. Drawn with 2 px strokes on a 32 px grid. The tick is the only coloured element.
 
@@ -165,7 +165,7 @@ Rules:
 **README header.** The wordmark at 240 px wide, then the one-line description, then badges. Badges use Paper 2 for the label cell and Teal or Ink for the value cell; never red for a passing state.
 
 ```md
-<img src="docs/brand/logo/wordmark.svg" alt="Laravel PDF Testing" width="240">
+<img src="docs/brand/logo/wordmark.svg" alt="AssertPDF" width="240">
 
 Pest and PHPUnit assertions against real PDF text, pages and rendered snapshots.
 ```
@@ -175,7 +175,7 @@ Where a dark-mode variant is wanted on GitHub:
 ```md
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/brand/logo/wordmark-dark.svg">
-  <img src="docs/brand/logo/wordmark.svg" alt="Laravel PDF Testing" width="240">
+  <img src="docs/brand/logo/wordmark.svg" alt="AssertPDF" width="240">
 </picture>
 ```
 

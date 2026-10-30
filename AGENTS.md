@@ -1,6 +1,6 @@
 # PDF testing toolkit
 
-Milestone scope: https://github.com/craigsimps/laravel-pdf-testing/issues/3, part 1.
+Milestone scope: https://github.com/craigsimps/assertpdf/issues/3, part 1.
 Only `milestone-3-release-readiness` may be pushed for CI. Do not merge, open PRs,
 push tags, change visibility or publish packages. `v0.1.0-rc.1` is local only.
 Branding, landing page and demo styling are separate Claude Code design work.
@@ -9,7 +9,7 @@ Branding, landing page and demo styling are separate Claude Code design work.
 
 - PHP 8.3/8.4, Composer 2, Node 24.21.0 and npm 11.
 - `composer install`
-- `php bin/pdf-testing install` — pinned renderer setup inside the package.
+- `php bin/assertpdf install` — pinned renderer setup inside the package.
 
 ## Checks
 
@@ -18,8 +18,8 @@ Branding, landing page and demo styling are separate Claude Code design work.
 - `composer lint` — PHP syntax and Node syntax checks.
 - `sh tests/installation.sh` — disposable PHPUnit-only and Testbench consumer installation checks (network required).
 - `npm run fixtures` — regenerate deterministic test PDFs after intentional fixture changes.
-- `docker build --platform linux/amd64 -f Dockerfile.ci -t pdf-testing-ci .`
-- `docker run --rm --network none pdf-testing-ci` — pinned Linux checks without network access.
+- `docker build --platform linux/amd64 -f Dockerfile.ci -t assertpdf-ci .`
+- `docker run --rm --network none assertpdf-ci` — pinned Linux checks without network access.
 - Repeat the Docker build/run with `--build-arg OPTIONAL_GENERATORS=0` and a separate image tag to check optional-generator absence.
 - For PHP 8.4 / Pest 4, copy `PHP_IMAGE` and `PEST_VERSION` build arguments from `.github/workflows/tests.yml`.
 - The separate local demo is `../laravel-pdf-testing-demo`; follow its README for setup and `composer test`. Never add a remote without approval.
