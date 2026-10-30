@@ -28,6 +28,6 @@
     "config": {"allow-plugins": {"pestphp/pest-plugin": true}, "sort-packages": true, "platform": {"php": "8.3.0"}},
     "scripts": {
         "test": "pest",
-        "lint": ["find src tests config -name '*.php' -print0 | xargs -0 -n1 php -l", "php -l bin/pdf-testing", "node --check bin/pdf.mjs", "node --check bin/snapshot.mjs", "node --check tests/fixtures/generate.mjs"]
+        "lint": ["find src tests config -name '*.php' -print0 | xargs -0 -n1 php -l", "php -l bin/pdf-testing", "node --check bin/pdf.mjs", "node --check bin/snapshot.mjs", "node --check tests/fixtures/generate.mjs", "node --check docs/brand/contrast.mjs"]
     }
 }
