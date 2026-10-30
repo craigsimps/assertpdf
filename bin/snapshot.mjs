@@ -1,5 +1,5 @@
-import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, unlinkSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
 import { createCanvas } from '@napi-rs/canvas';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
@@ -45,6 +45,7 @@ export async function compareSnapshot(document, { directory, mask, maxDiffPixels
   if (manifest && !baselineMismatch && manifest.pages !== document.numPages) {
     failures.push(`PDF snapshot page count: expected ${manifest.pages}, found ${document.numPages}.`);
   }
+  const updatedPages = [];
   for (let number = 1; number <= document.numPages; number++) {
     const page = await document.getPage(number);
     const viewport = page.getViewport({ scale: 1 });
@@ -59,8 +60,7 @@ export async function compareSnapshot(document, { directory, mask, maxDiffPixels
     if (baselineMismatch) continue;
     const baselinePath = join(directory, `page-${number}.png`);
     if (update) {
-      mkdirSync(directory, { recursive: true });
-      writeFileSync(baselinePath, bytes);
+      updatedPages.push(bytes);
       continue;
     }
     const artifactDirectory = join(directory, 'artifacts');
@@ -86,11 +86,24 @@ export async function compareSnapshot(document, { directory, mask, maxDiffPixels
     }
   }
   if (update) {
-    for (const name of readdirSync(directory)) {
-      const match = /^page-(\d+)\.png$/.exec(name);
-      if (match && Number(match[1]) > document.numPages) unlinkSync(join(directory, name));
+    // Render/validate everything before touching the baseline. Stage on the same filesystem.
+    mkdirSync(dirname(directory), { recursive: true });
+    const staging = mkdtempSync(`${directory}.update-`);
+    const backup = `${staging}.previous`;
+    try {
+      updatedPages.forEach((bytes, index) => writeFileSync(join(staging, `page-${index + 1}.png`), bytes));
+      writeFileSync(join(staging, 'manifest.json'), JSON.stringify({ renderer, pages: document.numPages }, null, 2) + '\n');
+      if (existsSync(directory)) renameSync(directory, backup);
+      try {
+        renameSync(staging, directory);
+      } catch (error) {
+        if (existsSync(backup)) renameSync(backup, directory);
+        throw error;
+      }
+      rmSync(backup, { recursive: true, force: true });
+    } finally {
+      rmSync(staging, { recursive: true, force: true });
     }
-    writeFileSync(manifestPath, JSON.stringify({ renderer, pages: document.numPages }, null, 2) + '\n');
   }
   return { matches: failures.length === 0, message: failures.join('\n') };
 }

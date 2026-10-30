@@ -16,7 +16,7 @@ if (class_exists(Expectation::class)) {
         PdfAssertions::assertPdfPageCount($this->value, $count);
         return $this;
     });
-    $expectation->extend('toMatchPdfSnapshot', function (string $directory, ?array $mask = null, int $maxDiffPixels = 0) {
+    $expectation->extend('toMatchPdfSnapshot', function (string $directory, ?array $mask = null, ?int $maxDiffPixels = null) {
         PdfAssertions::assertPdfMatchesSnapshot($this->value, $directory, $mask, $maxDiffPixels);
         return $this;
     });

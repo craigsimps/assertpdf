@@ -10,40 +10,40 @@ use Throwable;
 
 final class PdfAssertions
 {
-    public static function assertPdfContainsText(string $pdf, string $text): void
+    public static function assertPdfContainsText(mixed $pdf, string $text): void
     {
         $actual = self::run($pdf, 'inspect')['text'];
         Assert::assertStringContainsString($text, $actual, "Expected PDF to contain \"{$text}\".\nExtracted text:\n{$actual}");
     }
 
-    public static function assertPdfPageCount(string $pdf, int $count): void
+    public static function assertPdfPageCount(mixed $pdf, int $count): void
     {
         $actual = self::run($pdf, 'inspect')['pages'];
         Assert::assertSame($count, $actual, "Expected PDF to have {$count} page(s); found {$actual}.");
     }
 
     /** Mask coordinates are integer pixels at 72 DPI, from the top-left, with a 1-based page. */
-    public static function assertPdfMatchesSnapshot(string $pdf, string $directory, ?array $mask = null, int $maxDiffPixels = 0): void
+    public static function assertPdfMatchesSnapshot(mixed $pdf, string $directory, ?array $mask = null, ?int $maxDiffPixels = null): void
     {
+        $config = class_exists(\Illuminate\Container\Container::class) && \Illuminate\Container\Container::getInstance()->bound('config')
+            ? \Illuminate\Container\Container::getInstance()->make('config')->get('pdf-testing', []) : [];
+        if ($directory !== '' && isset($config['snapshot_path']) && !str_starts_with($directory, '/') && !preg_match('/^[A-Za-z]:[\\\\\/]/', $directory) && !str_contains($directory, '://')) {
+            $directory = rtrim($config['snapshot_path'], '/\\').'/'.$directory;
+        }
         $result = self::run($pdf, 'snapshot', [
             'directory' => $directory,
             'mask' => $mask,
-            'maxDiffPixels' => $maxDiffPixels,
+            'maxDiffPixels' => $maxDiffPixels ?? $config['max_diff_pixels'] ?? 0,
             'update' => getenv('PDF_TESTING_UPDATE_SNAPSHOTS') === '1',
         ]);
         Assert::assertTrue($result['matches'], $result['message']);
     }
 
-    private static function run(string $pdf, string $operation, array $options = []): array
+    private static function run(mixed $pdf, string $operation, array $options = []): array
     {
         try {
-            if (!str_starts_with($pdf, '%PDF-')) {
-                if (str_contains($pdf, '://') || str_contains($pdf, "\0") || !is_file($pdf) || !is_readable($pdf)) {
-                    throw new \RuntimeException('Provide PDF bytes beginning with %PDF- or a readable local file path (not a URL).');
-                }
-                $pdf = file_get_contents($pdf);
-            }
-
+            $pdf = PdfInput::bytes($pdf);
+            Renderer::assertInstalled();
             $process = new Process(['node', dirname(__DIR__).'/bin/pdf.mjs']);
             $process->setInput(json_encode(['pdf' => base64_encode($pdf), 'operation' => $operation] + $options, JSON_THROW_ON_ERROR));
             $process->setTimeout(60);
