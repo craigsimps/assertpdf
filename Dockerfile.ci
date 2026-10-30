@@ -1,6 +1,7 @@
+ARG PHP_IMAGE=php:8.3.30-cli-bookworm@sha256:68e9d207ef1afe71769cbcf17fd671c7f565ad1cad8bdfb02c710eb84da50da1
 FROM node:24.21.0-bookworm-slim@sha256:d6aa754f16b3197301076f047b5def2f02ea1dbbc2ca920407d46d7ec7f87b20 AS node
 FROM composer:2.8.9@sha256:69d57c07ed077bc22d6e584202b6d9160f636abdb6df25c7c437ded589b3fa6c AS composer
-FROM php:8.3.30-cli-bookworm@sha256:68e9d207ef1afe71769cbcf17fd671c7f565ad1cad8bdfb02c710eb84da50da1
+FROM ${PHP_IMAGE}
 
 RUN apt-get update && apt-get install -y --no-install-recommends libxml2-dev libonig-dev libsqlite3-dev unzip git \
     && docker-php-ext-install -j2 dom mbstring xml xmlwriter pdo_sqlite \
@@ -14,6 +15,11 @@ WORKDIR /toolkit
 COPY composer.json composer.lock package.json package-lock.json ./
 RUN composer install --no-interaction --prefer-dist --no-scripts --no-autoloader
 COPY . .
+ARG PEST_VERSION=3.8.6
+RUN if [ "$PEST_VERSION" != 3.8.6 ]; then \
+      composer config platform.php 8.4.0 && \
+      composer require --dev "pestphp/pest:$PEST_VERSION" --with-all-dependencies --no-interaction --no-scripts --no-autoloader; \
+    fi
 RUN composer dump-autoload --no-interaction && php bin/pdf-testing install
 RUN sh tests/installation.sh
 ARG OPTIONAL_GENERATORS=1
