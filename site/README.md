@@ -10,6 +10,7 @@ This folder is excluded from Composer archives by `.gitattributes`.
 | --- | --- |
 | `src/pages/index.astro` | The landing page. All landing-page copy lives here; edit the text in place. Copy changes go through the Codex edit (AGENTS.md, Copywriting). |
 | `src/pages/404.astro` | Not-found page. |
+| `src/lib/links.js` | `REF` (`site`) and `withRef()`, which appends `ref=site` to every link that leaves the site for GitHub. |
 | `src/layouts/Base.astro` | Document shell: meta, canonical, Open Graph, font preloads, stylesheet imports. |
 | `src/styles/site.css` | Component rules from the approved page plus three site-only variables. |
 | `src/styles/fonts.css` | `@font-face` rules for the self-hosted fonts. |
@@ -60,9 +61,9 @@ The page assumes the package is on Packagist and the demo repository is public. 
 | --- | --- | --- | --- |
 | Cloudflare build environment | `SITE_URL` | unset; `astro.config.mjs` falls back to `https://laravel-pdf-testing.pages.dev` | the final origin, which feeds the canonical link, Open Graph URLs and the sitemap |
 | `public/robots.txt` | `Sitemap:` line | the same placeholder origin | the final origin |
-| `src/pages/index.astro` | `TODO-DEMO`: `href` of the demo button (`id="demo-todo"`) | the README's demo section | the public demo repository URL |
+| `src/pages/index.astro` | `TODO-DEMO`: `href` of the demo button (`id="demo-todo"`) | the README's demo section | the public demo repository URL, passed through `withRef()` like the other GitHub links |
 | `src/pages/index.astro` | `TODO-PACKAGIST` | install command assumes `craigsimps/laravel-pdf-testing:^0.1` is published | publish first, then deploy |
-| `src/pages/index.astro` | `TODO-ANALYTICS` | GoatCounter snippet kept as a source comment, not emitted | Craig's decision; the CSP in `public/_headers` needs a `script-src` entry if enabled |
+| Cloudflare dashboard | Web Analytics (`TODO-ANALYTICS` in `src/pages/index.astro`) | off | enable Cloudflare Web Analytics for the Pages project in the dashboard; it needs no site code. Cloudflare injects its beacon at the edge, so add `script-src https://static.cloudflareinsights.com` and `connect-src https://cloudflareinsights.com` to the CSP in `public/_headers` |
 
 Search `src/pages/index.astro` for `TODO-` to find each marker. Astro strips HTML comments from the output, so these notes never reach visitors.
 
