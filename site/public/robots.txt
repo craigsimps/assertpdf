@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Matches `site` in astro.config.mjs.
-Sitemap: https://assertpdf.com/sitemap-index.xml

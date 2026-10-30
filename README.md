@@ -1,6 +1,11 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/logo/wordmark-dark.svg">
+  <img src="docs/logo/wordmark.svg" alt="AssertPDF" width="240">
+</picture>
+
 # AssertPDF
 
-AssertPDF is a PDF testing toolkit for Laravel. Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
+AssertPDF is a PDF testing toolkit for Laravel. Website: [assertpdf.com](https://assertpdf.com) (source in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com), not yet live). Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
 
 **Release status:** preparing v0.1.0 (local candidate `v0.1.0-rc.1`). Not published on Packagist yet. Laravel is optional, no PDF generator is installed for consumers, and assertions run locally without a hosted service. Free, [MIT licensed](LICENSE).
 
@@ -76,7 +81,7 @@ Both readable **local paths** and raw bytes beginning `%PDF-` are accepted. URLs
 
 ## Demo
 
-**TODO — public URL placeholder, not live:** [assertpdf-demo](https://github.com/craigsimps/assertpdf-demo). No remote demo repository has been created. The review app currently lives locally at `../laravel-pdf-testing-demo`; its README covers setup, a real Dompdf invoice endpoint and package tests. Branding, demo styling and the landing page are a separate design handoff.
+**TODO — public URL placeholder, not live:** [assertpdf-demo](https://github.com/craigsimps/assertpdf-demo). No remote demo repository has been created. The review app currently lives locally at `../laravel-pdf-testing-demo`; its README covers setup, a real Dompdf invoice endpoint and package tests. The landing site and brand pack live in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com).
 
 ## Laravel responses
 
