@@ -1,0 +1,13 @@
+{
+  "name": "laravel-pdf-testing-renderer",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=24.21.0 <25"},
+  "scripts": {"fixtures": "node tests/fixtures/generate.mjs"},
+  "dependencies": {
+    "@napi-rs/canvas": "1.1.0",
+    "pdfjs-dist": "6.4.299",
+    "pixelmatch": "8.0.0",
+    "pngjs": "7.0.0"
+  }
+}

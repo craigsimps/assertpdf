@@ -1,0 +1,6 @@
+.git
+.amp
+vendor
+node_modules
+.phpunit.cache
+tests/tmp

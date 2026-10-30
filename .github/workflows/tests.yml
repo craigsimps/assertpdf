@@ -1,0 +1,14 @@
+name: PDF expectations
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned PHP and Node test image
+        run: docker build --platform linux/amd64 -f Dockerfile.ci -t pdf-testing-ci .
+      - name: Check and test with networking disabled
+        run: docker run --rm --network none pdf-testing-ci
