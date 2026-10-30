@@ -117,7 +117,10 @@ Filled pairs:
 
 | Token | Hex | Role | On Ground | On Surface |
 | --- | --- | --- | --- | --- |
-| Ground | `#0F171F` | page ground; also the light theme's terminal blocks and footer | | |
+| Ground | `#0F171F` | the page ground in the dark theme (`--paper`); in the light theme it is `--ground`: header, hero, terminal panels and footer | | |
+| Ground, dark theme | `#060B10` | `--ground` in the dark theme: header, hero, terminal panels and footer step one level darker than the page | Text 16.8:1 AAA, Text 2 10.1:1 AAA, Teal light 10.9:1 AAA, Diff light 8.3:1 AAA | |
+| Ground 2 | `#182330` light / `#0F171F` dark | raised surface on Ground: the hero's snapshot card, nav hover | | |
+| Ground line | `#2B3A49` light / `#1E2B3A` dark | decorative rules on Ground | | |
 | Surface | `#182330` | panels, code blocks | | |
 | Line (dark) | `#2B3A49` | decorative rules only | | |
 | Text | `#E8EDF2` | headings, body | 15.3:1 AAA | 13.5:1 AAA |
@@ -136,7 +139,7 @@ Craig asked for the accent used with more confidence and for the page to show th
 | Diff mark | `#FF0000` | graphic only: the red pixelmatch writes into `diff-N.png`, used in the hero's snapshot illustration | 4.0:1 on Paper as a graphic; never for text |
 | Diff faded | `#C9CED3` | graphic only: unchanged pixels as the diff PNG shows them | decorative |
 
-Ground (`#0F171F`) is now also used as the header and hero background in both themes, with Text, Text 2, Teal light and Diff light on it (ratios in the dark table above).
+Ground is also the header and hero background: `#0F171F` in the light theme and `#060B10` in the dark theme, where the page itself is `#0F171F`. Text, Text 2, Teal light and Diff light sit on it (ratios in the dark table above). The site defines no colours of its own: `tokens.css` also carries the on-fill text colours (`--on-teal` `#FFFFFF`, `--on-teal-light` `#0F171F`), the Teal light hover `#8AE3D9`, and the fixed colours of the invoice illustration (`--sheet-*`), which stays a white page in both themes.
 
 Rules:
 

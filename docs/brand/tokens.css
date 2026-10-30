@@ -1,7 +1,7 @@
 /*
  * Laravel PDF Testing brand tokens.
- * Source of truth for colour, type and shape. The Astro site imports this file directly;
- * keep the two in step. Contrast ratios are listed in docs/brand/README.md and checked
+ * Source of truth for colour, type and shape. The Astro site imports this file directly and
+ * defines no colours of its own. Contrast ratios are listed in docs/brand/README.md and checked
  * by `node docs/brand/contrast.mjs`.
  */
 :root {
@@ -21,14 +21,27 @@
 
   /* Added 2026-10-30 after design feedback: a colour-blocked band and the product's diff look. */
   --teal-deep: #06433E;    /* full-bleed band ground; Paper on it 11.2:1, Text 9.5:1, Teal light 6.2:1 */
-  --ground: #0F171F;       /* hero, header, terminal blocks and footer in both themes */
+  --ground: #0F171F;       /* header, hero, terminal panels and footer; darker (#060B10) in the dark theme */
+  --ground-2: #182330;     /* raised surface on Ground: the hero's snapshot card, nav hover */
+  --ground-line: #2B3A49;  /* decorative rules on Ground */
   --ground-text: #E8EDF2;
   --ground-text-2: #AEBBC8;
   --ground-teal: #5FD3C6;
+  --ground-teal-hover: #8AE3D9;  /* hover for Teal light links and buttons on Ground */
   --ground-diff: #F28B82;
+  --on-teal: #FFFFFF;      /* text and outlines on Teal and Teal deep fills, every theme (6.1:1 / 11.2:1) */
+  --on-teal-wash: rgba(255, 255, 255, 0.1);  /* hover wash for outlined buttons on Teal deep */
+  --on-teal-light: #0F171F;  /* text on Teal light and Diff light fills (10.0:1 / 7.6:1) */
   --diff-mark: #FF0000;    /* graphic only, never text: the red pixelmatch writes into diff-N.png */
   --diff-faded: #C9CED3;   /* graphic only: unchanged pixels as the diff PNG shows them, greyed */
   --crop: #5FD3C6;         /* crop and registration marks; decorative */
+
+  /* The snapshot illustration draws a white invoice page in both themes; these never remap. */
+  --sheet-paper: #FFFFFF;
+  --sheet-ink: #16222E;
+  --sheet-muted: #5B6875;
+  --sheet-line: #D5DBE1;
+  --sheet-grid: rgba(22, 34, 46, 0.06);  /* pixel-grid lines behind the diff page */
 
   /* Type */
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -64,5 +77,10 @@
     --teal-text: #8AE3D9;
     --diff: #F28B82;       /* diff-light (7.6:1 on ground) */
     --diff-tint: #3A1C1A;
+    /* Ground areas step one level darker so the hero, terminal panels and footer still read
+       against the #0F171F page ground. Text 16.8:1, Text 2 10.1:1, Teal light 10.9:1, Diff light 8.3:1. */
+    --ground: #060B10;
+    --ground-2: #0F171F;
+    --ground-line: #1E2B3A;
   }
 }
