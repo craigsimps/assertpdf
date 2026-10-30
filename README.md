@@ -5,7 +5,7 @@
 
 # AssertPDF
 
-AssertPDF is a PDF testing toolkit for Laravel. Website: [assertpdf.com](https://assertpdf.com) (source in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com), not yet live). Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
+AssertPDF is a PDF testing toolkit for Laravel. The website, [assertpdf.com](https://assertpdf.com), is not live yet. Its source is in [craigsimps/assertpdf-com](https://github.com/craigsimps/assertpdf-com). Catch missing invoice totals, unexpected page breaks and moved content in the **PDF your application actually emits**. This Composer dev package adds text, page-count and visual-snapshot assertions to Pest and PHPUnit. It complements generator fakes: a fake proves you requested a PDF; these assertions inspect the resulting bytes.
 
 **Release status:** preparing v0.1.0 (local candidate `v0.1.0-rc.1`). Not published on Packagist yet. Laravel is optional, no PDF generator is installed for consumers, and assertions run locally without a hosted service. Free, [MIT licensed](LICENSE).
 
@@ -39,7 +39,7 @@ Install as a **dev dependency** in an existing Laravel 12 app with Pest or PHPUn
 
 ### Before publication: local checkout
 
-Clone this repository next to your application (the folder is `assertpdf`). From your **application directory** (adjust the relative path if needed):
+Clone this repository into `assertpdf` next to your application. From your **application directory** (adjust the relative path if needed):
 
 ```sh
 composer config repositories.assertpdf '{"type":"path","url":"../assertpdf","options":{"symlink":false}}'

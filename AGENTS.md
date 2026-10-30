@@ -3,7 +3,7 @@
 Milestone scope: https://github.com/craigsimps/assertpdf/issues/3, part 1.
 Only `milestone-3-release-readiness` may be pushed for CI. Do not merge, open PRs,
 push tags, change visibility or publish packages. `v0.1.0-rc.1` is local only.
-The landing site and brand pack live in the separate repository craigsimps/assertpdf-com; this package keeps only the README wordmark in `docs/logo/`.
+The landing site and brand pack live in craigsimps/assertpdf-com. This package keeps the README wordmark files in `docs/logo/`.
 
 ## Setup
 

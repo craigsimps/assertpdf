@@ -6,7 +6,7 @@ First free release, prepared as local candidate `v0.1.0-rc.1`. No public tag or 
 
 ### Changed
 
-- Renamed the product to AssertPDF before first release: package `craigsimps/assertpdf` (was `craigsimps/laravel-pdf-testing`), namespace `AssertPdf\` (was `PdfTesting\`), binary `bin/assertpdf`, config key `assertpdf`, publish tag `assertpdf-config`, Artisan command `assertpdf:install` and environment variable `ASSERTPDF_UPDATE_SNAPSHOTS`.
+- Renamed the product to AssertPDF before its first release: package `craigsimps/assertpdf` (was `craigsimps/laravel-pdf-testing`), namespace `AssertPdf\` (was `PdfTesting\`), binary `bin/assertpdf`, config key `assertpdf`, publish tag `assertpdf-config`, Artisan command `assertpdf:install` and environment variable `ASSERTPDF_UPDATE_SNAPSHOTS`.
 
 ### Added
 

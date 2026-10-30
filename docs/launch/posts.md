@@ -4,7 +4,7 @@ Prepared 2026-10-30. **Do not send before public release approval.** Replace `[P
 
 ## Laravel News tip
 
-**Subject:** AssertPDF: free PDF testing assertions for the document your Laravel app generates
+**Subject:** AssertPDF: a free PDF testing toolkit for Laravel
 
 Hi Laravel News team,
 
