@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 — 2026-10-30
+
+Packaging and documentation only; no code change.
+
+### Changed
+
+- The dist archive now contains only what consumers need: `src/`, `config/`, `bin/` with the renderer scripts, `package.json` and `package-lock.json`, `README.md`, `LICENSE`, `CHANGELOG.md` and the README wordmark in `docs/logo/`. Tests, launch documents, CI files, `Dockerfile.ci`, `phpunit.xml`, `AGENTS.md` and `composer.lock` are export-ignored.
+- README wording no longer refers to pre-release steps.
+
 ## 0.1.0 — 2026-10-30
 
 First free release.

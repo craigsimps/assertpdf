@@ -1,2 +1,17 @@
 # PDF xref records have significant spacing; do not normalise or diff as text.
 tests/fixtures/*.pdf binary
+
+# Keep development-only files out of the dist archive. Consumers need src/, config/, bin/ with the
+# renderer scripts, package.json and package-lock.json for `assertpdf install`, README, LICENSE and
+# CHANGELOG. docs/logo stays because the README embeds the wordmark from it.
+/.github export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.dockerignore export-ignore
+/AGENTS.md export-ignore
+/Dockerfile.ci export-ignore
+/phpunit.xml export-ignore
+/composer.lock export-ignore
+/tests export-ignore
+/docs/launch export-ignore
+/docs/superpowers export-ignore
