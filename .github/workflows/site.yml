@@ -1,0 +1,43 @@
+name: Landing site build
+on:
+  push:
+    paths:
+      - 'site/**'
+      - 'docs/brand/tokens.css'
+      - '.github/workflows/site.yml'
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'docs/brand/tokens.css'
+      - '.github/workflows/site.yml'
+permissions:
+  contents: read
+jobs:
+  build:
+    name: astro build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: site/.node-version
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - name: Check the output
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/sitemap-index.xml
+          test -f dist/_headers
+          ! grep -q '<script' dist/index.html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: site/dist
+          retention-days: 7

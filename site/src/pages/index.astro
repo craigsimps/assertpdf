@@ -1,26 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laravel PDF Testing: test the PDF your app generates</title>
-<meta name="description" content="Free, MIT-licensed PDF assertions for Pest and PHPUnit. Check the text, count the pages and compare rendered snapshots.">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#0F171F">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles.css">
+---
+import Base from '../layouts/Base.astro';
+import { withRef } from '../lib/links.js';
+const title = 'Laravel PDF Testing: test the PDF your app generates';
+const description = 'Free, MIT-licensed PDF assertions for Pest and PHPUnit. Check the text, count the pages and compare rendered snapshots.';
+---
+<Base title={title} description={description}>
 <!--
   LAUNCH CHECKLIST (remove when done):
-  1. TODO-DEMO: replace both demo links (id="demo-todo" and the nav) with the verified public demo URL.
-  2. TODO-PACKAGIST: confirm craigsimps/laravel-pdf-testing is published before this page goes live;
-     the install command below assumes it.
-  3. TODO-ANALYTICS: optional, free and privacy-friendly only. A GoatCounter snippet is included at the
-     end of the body, commented out. Leave it disabled until Craig decides.
+  1. TODO-DEMO: point the demo button (id="demo-todo") at the public demo repository URL.
+  2. TODO-PACKAGIST: the page is written as already published; publish craigsimps/laravel-pdf-testing before go-live.
+  3. TODO-ANALYTICS: Cloudflare Web Analytics, enabled in the Cloudflare dashboard at go-live; no site code.
+     See site/README.md, go-live settings (the CSP in public/_headers must allow the beacon).
   Copy for this page lives in this file only. Styling is in styles.css.
   The invoice pages in the hero are drawn in HTML; the numbers in them are sample data, not measurements.
 -->
-</head>
-<body>
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header on-ground">
@@ -39,7 +32,7 @@
         <li><a href="#checks">What it checks</a></li>
         <li><a href="#install">Install</a></li>
         <li><a href="#demo">Demo</a></li>
-        <li><a href="https://github.com/craigsimps/laravel-pdf-testing">GitHub</a></li>
+        <li><a href={withRef('https://github.com/craigsimps/laravel-pdf-testing')}>GitHub</a></li>
       </ul>
     </nav>
   </div>
@@ -109,21 +102,21 @@
       <div class="pane pane-code">
         <div class="pane-inner">
           <p class="pane-title">tests/Feature/InvoicePdfTest.php</p>
-          <pre tabindex="0" aria-label="Pest test file"><code><span class="k">it</span>(<span class="s">'has one page'</span>, <span class="k">function</span> () {
+          <pre tabindex="0" aria-label="Pest test file"><code><span class="k">it</span>(<span class="s">'has one page'</span>, <span class="k">function</span> () &#123;
     <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
         -&gt;toHavePdfPageCount(1);
-});
+&#125;);
 
-<span class="k">it</span>(<span class="s">'shows the total'</span>, <span class="k">function</span> () {
+<span class="k">it</span>(<span class="s">'shows the total'</span>, <span class="k">function</span> () &#123;
     <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
         -&gt;toHavePdfText(<span class="s">'Invoice 1001'</span>)
         -&gt;toHavePdfText(<span class="s">'120.00'</span>);
-});
+&#125;);
 
-<span class="k">it</span>(<span class="s">'matches the approved layout'</span>, <span class="k">function</span> () {
+<span class="k">it</span>(<span class="s">'matches the approved layout'</span>, <span class="k">function</span> () &#123;
     <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
         -&gt;toMatchPdfSnapshot(<span class="s">'invoice-1001'</span>);
-});</code></pre>
+&#125;);</code></pre>
         </div>
       </div>
       <div class="pane pane-term on-ground">
@@ -179,12 +172,11 @@
   <section class="install on-deep" id="install" aria-labelledby="install-title">
     <div class="wrap">
       <div class="col">
-        <p class="eyebrow">After publication on Packagist</p>
         <h2 class="titled" id="install-title">Install</h2>
         <p>Add it to an existing Laravel 12 app with Pest or PHPUnit. The second command installs the pinned renderer inside the package. Installation needs network access. Assertions run offline.</p>
         <pre class="terminal" tabindex="0" aria-label="Install commands"><code><span class="dim">$</span> composer require --dev 'craigsimps/laravel-pdf-testing:^0.1' -W
 <span class="dim">$</span> vendor/bin/pdf-testing install</code></pre>
-        <p class="muted">Not on Packagist yet. Until publication, use the local installation instructions in the README. Existing Pest installations need no registration step. Use your own PDF generator. Full details in the <a href="https://github.com/craigsimps/laravel-pdf-testing#requirements-and-installation">README</a>.</p>
+        <p class="muted">Existing Pest installations need no registration step. Use your own PDF generator. Full details in the <a href={withRef('https://github.com/craigsimps/laravel-pdf-testing#requirements-and-installation')}>README</a>.</p>
       </div>
       <div class="col">
         <h3>You need</h3>
@@ -204,10 +196,9 @@
     <div class="wrap">
       <div class="col">
         <h2 class="titled" id="demo-title">A complete example</h2>
-        <p>A small Laravel app with an invoice PDF route and passing PDF tests. Once the repository is public, you can clone it and change the invoice to see which tests fail.</p>
+        <p>A small Laravel app with an invoice PDF route and passing PDF tests. You can clone it and change the invoice to see which tests fail.</p>
         <!-- TODO-DEMO: replace the href with the verified public demo repository URL. -->
-        <div class="actions"><a class="button button-secondary" id="demo-todo" href="https://github.com/craigsimps/laravel-pdf-testing#demo">Read about the demo</a></div>
-        <p class="note note-fail"><strong>Not live yet.</strong> This link is a placeholder until the demo repository is public.</p>
+        <div class="actions"><a class="button button-secondary" id="demo-todo" href={withRef('https://github.com/craigsimps/laravel-pdf-testing#demo')}>Read about the demo</a></div>
       </div>
       <div class="col">
         <h3>You control snapshot updates</h3>
@@ -256,15 +247,9 @@
 
 <footer class="site-footer on-ground">
   <div class="wrap">
-    <p>MIT licensed. Source, changelog and issues on <a href="https://github.com/craigsimps/laravel-pdf-testing">GitHub</a>.</p>
+    <p>MIT licensed. Source, changelog and issues on <a href={withRef('https://github.com/craigsimps/laravel-pdf-testing')}>GitHub</a>.</p>
     <p>Laravel is a trademark of Taylor Otwell. This package is independent and not endorsed by Laravel.</p>
   </div>
 </footer>
 
-<!--
-  TODO-ANALYTICS (disabled). GoatCounter is free for non-commercial use, open source and sets no cookies.
-  To enable: create a site at goatcounter.com, replace YOURCODE, and uncomment. Nothing loads while this is a comment.
-  <script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
--->
-</body>
-</html>
+</Base>

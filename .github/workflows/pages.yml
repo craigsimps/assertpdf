@@ -1,4 +1,4 @@
-# Publishes docs/site/ to GitHub Pages. Manual only: nothing runs until someone starts it,
+# Publishes the Astro build of site/ to GitHub Pages. Manual only: nothing runs until someone starts it,
 # and the deploy step needs Pages switched to the "GitHub Actions" source first.
 # Enabling Pages and making the repository public are Craig's calls.
 name: Landing page
@@ -20,9 +20,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: site/.node-version
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+        working-directory: site
+      - run: npm run build
+        working-directory: site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/site
+          path: site/dist
       - id: deployment
         uses: actions/deploy-pages@v4

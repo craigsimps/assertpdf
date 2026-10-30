@@ -9,6 +9,7 @@ const colours = {
   ground: '#0F171F', surface: '#182330', text: '#E8EDF2', text2: '#AEBBC8', muted: '#8A98A6',
   tealLight: '#5FD3C6', tealLightHover: '#8AE3D9', tealTintDark: '#12302E', diffLight: '#F28B82', diffTintDark: '#3A1C1A',
   tealDeep: '#06433E', diffMark: '#FF0000',
+  groundDark: '#060B10', // --ground in the dark theme (header, hero, terminal panels, footer)
 };
 
 // [foreground, background, minimum ratio]. 4.5 = AA normal text, 3 = AA large text / UI.
@@ -27,6 +28,11 @@ const pairs = [
   // Teal deep band (added 2026-10-30)
   ['paper', 'tealDeep', 4.5], ['text', 'tealDeep', 4.5], ['text2', 'tealDeep', 4.5], ['tealLight', 'tealDeep', 4.5],
   ['diffMark', 'paper', 3], // graphic only (the diff PNG's red on a white page); never used for text
+  // Dark-theme Ground (#060B10): the same text roles as on Ground
+  ['text', 'groundDark', 4.5], ['text2', 'groundDark', 4.5], ['tealLight', 'groundDark', 4.5], ['diffLight', 'groundDark', 4.5],
+  ['tealLightHover', 'groundDark', 4.5], ['tealLightHover', 'ground', 4.5],
+  // Text on Teal light and Diff light fills (badges, on-ground buttons)
+  ['ground', 'diffLight', 4.5],
 ];
 
 const channel = (c) => { c /= 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };

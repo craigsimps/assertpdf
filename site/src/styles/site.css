@@ -1,60 +1,10 @@
-/* Laravel PDF Testing landing page. Values come from docs/brand/tokens.css; keep them in step. */
-
-@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); }
-@font-face { font-family: "IBM Plex Sans"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); }
-@font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+/* Laravel PDF Testing landing page, Astro build.
+   Every colour comes from ../../../docs/brand/tokens.css, imported first by the layout; this file holds
+   only the non-colour site variables and the component rules from the approved page. */
 
 :root {
   color-scheme: light dark;
-  --paper: #FFFFFF;
-  --paper-2: #F3F5F7;
-  --line: #D5DBE1;
-  --ink: #16222E;
-  --ink-2: #3F4C59;
-  --ink-3: #5B6875;
-  --teal: #0B6E66;
-  --teal-hover: #095A54;
-  --teal-tint: #E3F3F1;
-  --teal-text: #075E57;
-  --diff: #B42318;
-  --diff-tint: #FDECEA;
-  --teal-deep: #06433E;
-  /* Ground is used in both themes: header, hero, terminal panels, footer. */
-  --ground: #0F171F;
-  --ground-2: #182330;
-  --ground-line: #2B3A49;
-  --ground-text: #E8EDF2;
-  --ground-text-2: #AEBBC8;
-  --ground-teal: #5FD3C6;
-  --ground-diff: #F28B82;
-  --diff-mark: #FF0000;
-  --diff-faded: #C9CED3;
-  --crop: #5FD3C6;
-  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --radius: 6px;
   --wrap: 1120px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #0F171F;
-    --paper-2: #182330;
-    --line: #2B3A49;
-    --ink: #E8EDF2;
-    --ink-2: #AEBBC8;
-    --ink-3: #8A98A6;
-    --teal: #5FD3C6;
-    --teal-hover: #8AE3D9;
-    --teal-tint: #12302E;
-    --teal-text: #8AE3D9;
-    --diff: #F28B82;
-    --diff-tint: #3A1C1A;
-    --ground: #060B10;
-    --ground-2: #0F171F;
-    --ground-line: #1E2B3A;
-  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -105,8 +55,8 @@ pre code { font-size: inherit; }
 .terminal .c { color: var(--ground-text-2); }
 .terminal .pass { color: var(--ground-teal); }
 .terminal .fail { color: var(--ground-diff); }
-.terminal .badge-pass { background: var(--ground-teal); color: #0F171F; padding: 0 0.4em; border-radius: 3px; font-weight: 500; }
-.terminal .badge-fail { background: var(--ground-diff); color: #0F171F; padding: 0 0.4em; border-radius: 3px; font-weight: 500; }
+.terminal .badge-pass { background: var(--ground-teal); color: var(--on-teal-light); padding: 0 0.4em; border-radius: 3px; font-weight: 500; }
+.terminal .badge-fail { background: var(--ground-diff); color: var(--on-teal-light); padding: 0 0.4em; border-radius: 3px; font-weight: 500; }
 .terminal .dim { color: var(--ground-text-2); }
 
 .skip-link {
@@ -115,7 +65,7 @@ pre code { font-size: inherit; }
   top: -100px;
   padding: 0.75rem 1rem;
   background: var(--ground-teal);
-  color: #0F171F;
+  color: var(--on-teal-light);
   border-radius: var(--radius);
   font-weight: 500;
   z-index: 10;
@@ -181,19 +131,19 @@ pre code { font-size: inherit; }
   text-decoration: none;
   border: 1px solid transparent;
 }
-.button-primary { background: var(--teal); color: #FFFFFF; }
-.button-primary:hover { background: var(--teal-hover); color: #FFFFFF; }
+.button-primary { background: var(--teal); color: var(--on-teal); }
+.button-primary:hover { background: var(--teal-hover); color: var(--on-teal); }
 .button-secondary { border-color: var(--ink); color: var(--ink); }
 .button-secondary:hover { background: var(--paper-2); color: var(--ink); }
-.on-ground .button-primary { background: var(--ground-teal); color: #0F171F; }
-.on-ground .button-primary:hover { background: #8AE3D9; color: #0F171F; }
+.on-ground .button-primary { background: var(--ground-teal); color: var(--on-teal-light); }
+.on-ground .button-primary:hover { background: var(--ground-teal-hover); color: var(--on-teal-light); }
 .on-ground .button-secondary { border-color: var(--ground-text); color: var(--ground-text); }
 .on-ground .button-secondary:hover { background: var(--ground-2); color: var(--ground-text); }
-.on-deep .button-secondary { border-color: #FFFFFF; color: #FFFFFF; }
-.on-deep .button-secondary:hover { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; }
+.on-deep .button-secondary { border-color: var(--on-teal); color: var(--on-teal); }
+.on-deep .button-secondary:hover { background: var(--on-teal-wash); color: var(--on-teal); }
 @media (prefers-color-scheme: dark) {
-  .button-primary { color: #0F171F; }
-  .button-primary:hover { color: #0F171F; }
+  .button-primary { color: var(--on-teal-light); }
+  .button-primary:hover { color: var(--on-teal-light); }
 }
 
 /* Signature image: the snapshot triptych */
@@ -205,8 +155,8 @@ pre code { font-size: inherit; }
 .snap-label.is-diff, .snap-label.is-diff small { color: var(--ground-diff); }
 .sheet {
   aspect-ratio: 1 / 1.3;
-  background: #FFFFFF;
-  color: #16222E;
+  background: var(--sheet-paper);
+  color: var(--sheet-ink);
   border-radius: 2px;
   padding: 11% 10%;
   display: flex;
@@ -219,21 +169,21 @@ pre code { font-size: inherit; }
   position: relative;
 }
 .sheet-head { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; }
-.sheet-head span:last-child { font-weight: 400; color: #5B6875; }
-.bar { height: 0.5em; border-radius: 1px; background: #D5DBE1; }
+.sheet-head span:last-child { font-weight: 400; color: var(--sheet-muted); }
+.bar { height: 0.5em; border-radius: 1px; background: var(--sheet-line); }
 .bar.w60 { width: 60%; } .bar.w45 { width: 45%; } .bar.w75 { width: 75%; }
 .row { display: flex; justify-content: space-between; gap: 1em; }
 .row .bar { flex: 1; margin-top: 0.3em; }
 .row span { font-family: var(--font-mono); }
-.total { display: flex; justify-content: space-between; margin-top: auto; padding-top: 5%; border-top: 1px solid #16222E; font-weight: 600; }
+.total { display: flex; justify-content: space-between; margin-top: auto; padding-top: 5%; border-top: 1px solid var(--sheet-ink); font-weight: 600; }
 .total span:last-child { font-family: var(--font-mono); }
 .total.is-missing span:last-child { visibility: hidden; }
 .sheet.is-diff {
   color: var(--diff-faded);
-  background-color: #FFFFFF;
+  background-color: var(--sheet-paper);
   background-image:
-    linear-gradient(rgba(22, 34, 46, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(22, 34, 46, 0.06) 1px, transparent 1px);
+    linear-gradient(var(--sheet-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--sheet-grid) 1px, transparent 1px);
   background-size: 6px 6px;
 }
 .sheet.is-diff .bar { background: var(--diff-faded); }
@@ -255,9 +205,15 @@ pre code { font-size: inherit; }
 @media (min-width: 640px) { .pane { padding: 2.5rem 1.5rem; } }
 .pane-code { background: var(--paper-2); border-top: 1px solid var(--line); }
 .pane-term { background: var(--ground); color: var(--ground-text); }
-.pane-inner { max-width: calc(var(--wrap) / 2 - 1.5rem); display: flex; flex-direction: column; gap: 0.75rem; }
-.pane-code .pane-inner { margin-left: auto; }
-.pane-term .pane-inner { margin-right: auto; }
+.pane-inner { display: flex; flex-direction: column; gap: 0.75rem; }
+/* Each pane's content sits in its half of the shared content column: the pane padding (1.5rem) plus
+   the wrap padding (1.5rem) come off half the wrap width, so the code's left edge and the terminal's
+   right edge land exactly on the column edges. Below 900px the panes stack and simply use the pane padding. */
+@media (min-width: 900px) {
+  .pane-inner { max-width: calc(var(--wrap) / 2 - 3rem); }
+  .pane-code .pane-inner { margin-left: auto; }
+  .pane-term .pane-inner { margin-right: auto; }
+}
 .pane-title { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--ink-3); }
 .pane-term .pane-title { color: var(--ground-text-2); }
 .pane pre { border: 0; background: transparent; padding: 0; }
@@ -276,16 +232,15 @@ pre code { font-size: inherit; }
 .check .fails code { display: block; margin-top: 0.25rem; color: var(--ink); font-size: 0.8125rem; overflow-wrap: anywhere; }
 
 /* Teal deep band */
-.install { background: var(--teal-deep); color: #FFFFFF; }
+.install { background: var(--teal-deep); color: var(--on-teal); }
 .install .wrap { padding-block: 3.5rem 4rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
 @media (min-width: 900px) { .install .wrap { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 4rem; } }
 .install .col { display: flex; flex-direction: column; gap: 1rem; }
-.install p { color: #FFFFFF; }
+.install p { color: var(--on-teal); }
 .install .muted { color: var(--ground-text-2); }
 .install a:not(.button) { color: var(--ground-teal); }
 .install ul { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.375rem; font-size: 0.9375rem; }
-.install .eyebrow { color: var(--ground-teal); }
-.install .note { border: 1px solid var(--ground-teal); color: #FFFFFF; background: transparent; }
+.install .note { border: 1px solid var(--ground-teal); color: var(--on-teal); background: transparent; }
 .install .note strong { color: var(--ground-teal); }
 
 /* Demo and workflow */
@@ -319,4 +274,4 @@ pre code { font-size: inherit; }
 .site-footer { background: var(--ground); color: var(--ground-text-2); font-size: 0.875rem; }
 .site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; padding-block: 2rem; }
 .site-footer a { color: var(--ground-teal); }
-.site-footer a:hover { color: #8AE3D9; }
+.site-footer a:hover { color: var(--ground-teal-hover); }
