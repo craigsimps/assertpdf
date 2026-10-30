@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PdfTesting;
+namespace AssertPdf;
 
 use Illuminate\Console\Command;
 
 final class InstallRendererCommand extends Command
 {
-    protected $signature = 'pdf-testing:install';
+    protected $signature = 'assertpdf:install';
     protected $description = 'Install the pinned PDF testing renderer inside the package';
 
     public function handle(): int

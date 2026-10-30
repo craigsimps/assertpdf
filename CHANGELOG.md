@@ -4,9 +4,13 @@
 
 First free release, prepared as local candidate `v0.1.0-rc.1`. No public tag or Packagist release yet. Release date is deliberately unset until publication is approved.
 
+### Changed
+
+- Renamed the product to AssertPDF before its first release: package `craigsimps/assertpdf` (was `craigsimps/laravel-pdf-testing`), namespace `AssertPdf\` (was `PdfTesting\`), binary `bin/assertpdf`, config key `assertpdf`, publish tag `assertpdf-config`, Artisan command `assertpdf:install` and environment variable `ASSERTPDF_UPDATE_SNAPSHOTS`.
+
 ### Added
 
-- Pest `toHavePdfText`, `toHavePdfPageCount` and `toMatchPdfSnapshot` expectations, and equivalent `PdfTesting\PdfAssertions` methods for PHPUnit.
+- Pest `toHavePdfText`, `toHavePdfPageCount` and `toMatchPdfSnapshot` expectations, and equivalent `AssertPdf\PdfAssertions` methods for PHPUnit.
 - Assertions against actual PDF bytes or local files, with local pdf.js text extraction and page rendering. No hosted renderer, OCR or browser required by the toolkit.
 - Explicit, transactional visual-baseline updates, per-page pixel allowances, one rectangular mask and actual/diff PNG artifacts. Baselines record renderer, Node, OS and architecture; cross-environment comparisons are rejected.
 - Native Laravel test/HTTP, binary-file and streamed response inputs; repeatable flushed stream capture and HTTP-aware input errors. Invalid PDFs raise runtime errors even in negated expectations.

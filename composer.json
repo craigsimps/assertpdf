@@ -1,5 +1,5 @@
 {
-    "name": "craigsimps/laravel-pdf-testing",
+    "name": "craigsimps/assertpdf",
     "description": "Pest and PHPUnit assertions against real PDF text, pages and rendered snapshots.",
     "type": "library",
     "license": "MIT",
@@ -15,11 +15,11 @@
         "spatie/laravel-pdf": "^1.0"
     },
     "autoload": {
-        "psr-4": {"PdfTesting\\": "src/"},
+        "psr-4": {"AssertPdf\\": "src/"},
         "files": ["src/expectations.php"]
     },
-    "bin": ["bin/pdf-testing"],
-    "extra": {"laravel": {"providers": ["PdfTesting\\PdfTestingServiceProvider"]}},
+    "bin": ["bin/assertpdf"],
+    "extra": {"laravel": {"providers": ["AssertPdf\\AssertPdfServiceProvider"]}},
     "suggest": {
         "illuminate/support": "Optional auto-discovered Laravel provider and configuration (tested on Laravel 12).",
         "spatie/laravel-pdf": "Assert directly on a PdfBuilder (tested with 1.9).",
@@ -28,6 +28,6 @@
     "config": {"allow-plugins": {"pestphp/pest-plugin": true}, "sort-packages": true, "platform": {"php": "8.3.0"}},
     "scripts": {
         "test": "pest",
-        "lint": ["find src tests config -name '*.php' -print0 | xargs -0 -n1 php -l", "php -l bin/pdf-testing", "node --check bin/pdf.mjs", "node --check bin/snapshot.mjs", "node --check tests/fixtures/generate.mjs", "node --check docs/brand/contrast.mjs"]
+        "lint": ["find src tests config -name '*.php' -print0 | xargs -0 -n1 php -l", "php -l bin/assertpdf", "node --check bin/pdf.mjs", "node --check bin/snapshot.mjs", "node --check tests/fixtures/generate.mjs"]
     }
 }

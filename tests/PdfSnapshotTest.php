@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use PdfTesting\PdfAssertions;
+use AssertPdf\PdfAssertions;
 use PHPUnit\Framework\AssertionFailedError;
 
 beforeEach(function () {
     $this->snapshot = __DIR__.'/tmp/'.bin2hex(random_bytes(8));
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS');
 });
 
 afterEach(function () {
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS');
     if (is_dir($this->snapshot)) {
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->snapshot, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($files as $file) {
@@ -23,17 +23,17 @@ afterEach(function () {
 
 function createPdfBaseline(string $directory, string $fixture = 'invoice'): void
 {
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS=1');
     try {
         PdfAssertions::assertPdfMatchesSnapshot(__DIR__."/fixtures/{$fixture}.pdf", $directory);
     } finally {
-        putenv('PDF_TESTING_UPDATE_SNAPSHOTS');
+        putenv('ASSERTPDF_UPDATE_SNAPSHOTS');
     }
 }
 
 it('never creates a baseline without explicit update permission', function () {
     expect(fn () => PdfAssertions::assertPdfMatchesSnapshot(__DIR__.'/fixtures/invoice.pdf', $this->snapshot))
-        ->toThrow(AssertionFailedError::class, 'PDF_TESTING_UPDATE_SNAPSHOTS=1');
+        ->toThrow(AssertionFailedError::class, 'ASSERTPDF_UPDATE_SNAPSHOTS=1');
     expect(is_dir($this->snapshot))->toBeFalse();
 });
 
@@ -121,7 +121,7 @@ it('leaves the entire baseline untouched when an update fails on a later page', 
     // First page renders differently, second page refers to a nonexistent object.
     $pdf = str_replace(['/Kids [4 0 R 6 0 R]', 'Invoice 1001'], ['/Kids [4 0 R 9 0 R]', 'Invoice 9999'],
         file_get_contents(__DIR__.'/fixtures/two-pages.pdf'));
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS=1');
     expect(fn () => PdfAssertions::assertPdfMatchesSnapshot($pdf, $this->snapshot))
         ->toThrow(RuntimeException::class, 'Cannot read PDF:');
     if ($existing) {

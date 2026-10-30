@@ -1,10 +1,10 @@
 # v0.1.0 release readiness
 
-Prepared 2026-10-30 for [milestone 3, part 1](https://github.com/craigsimps/laravel-pdf-testing/issues/3). This is a readiness record, not publication authorisation.
+Prepared 2026-10-30 for [milestone 3, part 1](https://github.com/craigsimps/assertpdf/issues/3). This is a readiness record, not publication authorisation.
 
 ## Identity and compatibility
 
-Keep Composer name **`craigsimps/laravel-pdf-testing`** and PHP namespace **`PdfTesting\`**. The name matches the existing repository and installation contract. The namespace is already used by the public assertions, provider and examples; renaming it now adds consumer churn without a demonstrated benefit. The generic namespace does not imply ownership of a trademark or another package. The npm renderer package remains private; it is not a separate npm release.
+The naming decision below was superseded on 2026-10-30 by the rename to AssertPDF ([#8](https://github.com/craigsimps/assertpdf/issues/8)). The package is now `craigsimps/assertpdf` with namespace `AssertPdf\`. Original decision: Keep Composer name **`craigsimps/laravel-pdf-testing`** and PHP namespace **`PdfTesting\`**. The name matches the existing repository and installation contract. The namespace is already used by the public assertions, provider and examples; renaming it now adds consumer churn without a demonstrated benefit. The generic namespace does not imply ownership of a trademark or another package. The npm renderer package remains private; it is not a separate npm release.
 
 Keep the existing local renderer and optional generator boundaries. No new architecture or dependency tradeoff was introduced; retaining these established choices did not require a Counselors consultation. The README and CI define the verified support targets, not every combination Composer could theoretically resolve. No Laravel 11/13 or PHP 8.5 support is claimed.
 

@@ -35,7 +35,7 @@ export async function compareSnapshot(document, { directory, mask, maxDiffPixels
   const manifestPath = join(directory, 'manifest.json');
   let baselineMismatch;
   if (!update && !existsSync(manifestPath)) {
-    baselineMismatch = `Missing PDF snapshot: ${directory}. Set PDF_TESTING_UPDATE_SNAPSHOTS=1 to create it intentionally.`;
+    baselineMismatch = `Missing PDF snapshot: ${directory}. Set ASSERTPDF_UPDATE_SNAPSHOTS=1 to create it intentionally.`;
   }
   const manifest = update || baselineMismatch ? null : JSON.parse(readFileSync(manifestPath, 'utf8'));
   if (manifest && JSON.stringify(manifest.renderer) !== JSON.stringify(renderer)) {

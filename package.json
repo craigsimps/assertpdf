@@ -1,5 +1,5 @@
 {
-  "name": "laravel-pdf-testing-renderer",
+  "name": "assertpdf-renderer",
   "private": true,
   "type": "module",
   "engines": {"node": ">=24.21.0 <25"},

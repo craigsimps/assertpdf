@@ -35,6 +35,6 @@ jobs:
           --build-arg PHP_IMAGE=${{ matrix.php-image }}
           --build-arg PEST_VERSION=${{ matrix.pest }}
           --build-arg OPTIONAL_GENERATORS=${{ matrix.optional-generators }}
-          -f Dockerfile.ci -t pdf-testing-ci .
+          -f Dockerfile.ci -t assertpdf-ci .
       - name: Check and test with networking disabled
-        run: docker run --rm --network none pdf-testing-ci
+        run: docker run --rm --network none assertpdf-ci

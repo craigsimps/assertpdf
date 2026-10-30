@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PdfTesting\PdfAssertions;
+use AssertPdf\PdfAssertions;
 use Pest\Expectation;
 
 // Autoload the class rather than depending on Composer's order for Pest's function files.

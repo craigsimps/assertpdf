@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PdfTesting;
+namespace AssertPdf;
 
 use PHPUnit\Framework\Assert;
 use Symfony\Component\Process\Process;
@@ -26,7 +26,7 @@ final class PdfAssertions
     public static function assertPdfMatchesSnapshot(mixed $pdf, string $directory, ?array $mask = null, ?int $maxDiffPixels = null): void
     {
         $config = class_exists(\Illuminate\Container\Container::class) && \Illuminate\Container\Container::getInstance()->bound('config')
-            ? \Illuminate\Container\Container::getInstance()->make('config')->get('pdf-testing', []) : [];
+            ? \Illuminate\Container\Container::getInstance()->make('config')->get('assertpdf', []) : [];
         if ($directory !== '' && isset($config['snapshot_path']) && !str_starts_with($directory, '/') && !preg_match('/^[A-Za-z]:[\\\\\/]/', $directory) && !str_contains($directory, '://')) {
             $directory = rtrim($config['snapshot_path'], '/\\').'/'.$directory;
         }
@@ -34,7 +34,7 @@ final class PdfAssertions
             'directory' => $directory,
             'mask' => $mask,
             'maxDiffPixels' => $maxDiffPixels ?? $config['max_diff_pixels'] ?? 0,
-            'update' => getenv('PDF_TESTING_UPDATE_SNAPSHOTS') === '1',
+            'update' => getenv('ASSERTPDF_UPDATE_SNAPSHOTS') === '1',
         ]);
         Assert::assertTrue($result['matches'], $result['message']);
     }

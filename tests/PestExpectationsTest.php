@@ -26,11 +26,11 @@ it('does not treat an unreadable PDF as a successful negative expectation', func
 
 it('exposes the snapshot expectation with update, match, mask and failure', function () {
     $directory = __DIR__.'/tmp/pest-snapshot';
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS=1');
     try {
         expect(__DIR__.'/fixtures/invoice.pdf')->toMatchPdfSnapshot($directory);
     } finally {
-        putenv('PDF_TESTING_UPDATE_SNAPSHOTS');
+        putenv('ASSERTPDF_UPDATE_SNAPSHOTS');
     }
     try {
         expect(__DIR__.'/fixtures/invoice.pdf')->toMatchPdfSnapshot($directory);

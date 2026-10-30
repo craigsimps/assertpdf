@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="t">
-  <title id="t">Laravel PDF Testing</title>
-  <path d="M8 3h12l6 6v18a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M20 3v6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-  <path d="M11 14h7M11 18h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <path d="M11 24l3 3 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>

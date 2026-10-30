@@ -20,7 +20,7 @@ RUN if [ "$PEST_VERSION" != 3.8.6 ]; then \
       composer config platform.php 8.4.0 && \
       composer require --dev "pestphp/pest:$PEST_VERSION" --with-all-dependencies --no-interaction --no-scripts; \
     fi
-RUN composer dump-autoload --no-interaction && php bin/pdf-testing install
+RUN composer dump-autoload --no-interaction && php bin/assertpdf install
 RUN sh tests/installation.sh
 ARG OPTIONAL_GENERATORS=1
 RUN if [ "$OPTIONAL_GENERATORS" = 0 ]; then composer remove --dev spatie/laravel-pdf barryvdh/laravel-dompdf --no-interaction; fi

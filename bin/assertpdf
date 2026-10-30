@@ -6,14 +6,14 @@ declare(strict_types=1);
 require $_composer_autoload_path ?? dirname(__DIR__).'/vendor/autoload.php';
 
 if (($argv[1] ?? null) !== 'install' || count($argv) !== 2) {
-    fwrite(STDERR, "Usage: vendor/bin/pdf-testing install\n");
+    fwrite(STDERR, "Usage: vendor/bin/assertpdf install\n");
     exit(1);
 }
 try {
-    exit(\PdfTesting\Renderer::install(static function (string $type, string $buffer): void {
+    exit(\AssertPdf\Renderer::install(static function (string $type, string $buffer): void {
         fwrite($type === 'err' ? STDERR : STDOUT, $buffer);
     }));
 } catch (Throwable $error) {
-    fwrite(STDERR, 'Renderer installation failed: '.$error->getMessage()."\nInstall Node 24.21.0 and npm 11, then rerun vendor/bin/pdf-testing install.\n");
+    fwrite(STDERR, 'Renderer installation failed: '.$error->getMessage()."\nInstall Node 24.21.0 and npm 11, then rerun vendor/bin/assertpdf install.\n");
     exit(1);
 }

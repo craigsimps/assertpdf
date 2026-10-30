@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# PLACEHOLDER origin; matches `site` in astro.config.mjs. Update when the real domain is set.
-Sitemap: https://laravel-pdf-testing.pages.dev/sitemap-index.xml

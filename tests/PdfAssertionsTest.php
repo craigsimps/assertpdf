@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use PdfTesting\PdfAssertions;
+use AssertPdf\PdfAssertions;
 use PHPUnit\Framework\AssertionFailedError;
 
 it('reads text and page count from real PDF paths and bytes', function () {

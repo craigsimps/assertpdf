@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Illuminate\Http\Response;
 use Illuminate\Testing\TestResponse;
-use PdfTesting\PdfAssertions;
-use PdfTesting\PdfTestingServiceProvider;
+use AssertPdf\PdfAssertions;
+use AssertPdf\AssertPdfServiceProvider;
 use PHPUnit\Framework\AssertionFailedError;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -13,13 +13,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 uses(Orchestra\Testbench\TestCase::class);
 
 beforeEach(function () {
-    $this->app->register(PdfTestingServiceProvider::class);
+    $this->app->register(AssertPdfServiceProvider::class);
     $this->snapshot = __DIR__.'/tmp/laravel-'.bin2hex(random_bytes(6));
-    $this->app['config']->set('pdf-testing.snapshot_path', $this->snapshot);
+    $this->app['config']->set('assertpdf.snapshot_path', $this->snapshot);
 });
 
 afterEach(function () {
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS');
     (new Illuminate\Filesystem\Filesystem)->deleteDirectory($this->snapshot);
 });
 
@@ -57,9 +57,9 @@ it('asserts real PDF contents from Laravel and optional generator inputs', funct
     expect($pdf)->toHavePdfText('Invoice 1001')->toHavePdfPageCount(1);
     expect(fn () => expect($pdf)->toHavePdfText('Invoice 9999'))->toThrow(AssertionFailedError::class, 'Invoice 1001');
     expect(fn () => PdfAssertions::assertPdfPageCount($pdf, 2))->toThrow(AssertionFailedError::class, 'found 1');
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS=1');
     expect($pdf)->toMatchPdfSnapshot('invoice');
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS');
     expect($pdf)->toMatchPdfSnapshot('invoice');
     expect(fn () => PdfAssertions::assertPdfMatchesSnapshot(__DIR__.'/fixtures/moved.pdf', 'invoice'))
         ->toThrow(AssertionFailedError::class);
@@ -145,19 +145,19 @@ it('preserves HTTP context for malformed PDF bytes even under negation', functio
 })->with([false, true]);
 
 it('uses configured pixel defaults but honours an explicit zero override', function () {
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS=1');
     expect(__DIR__.'/fixtures/invoice.pdf')->toMatchPdfSnapshot('invoice');
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS');
-    $this->app['config']->set('pdf-testing.max_diff_pixels', 6000);
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS');
+    $this->app['config']->set('assertpdf.max_diff_pixels', 6000);
     expect(__DIR__.'/fixtures/moved.pdf')->toMatchPdfSnapshot('invoice');
     expect(fn () => expect(__DIR__.'/fixtures/moved.pdf')->toMatchPdfSnapshot('invoice', maxDiffPixels: 0))
         ->toThrow(AssertionFailedError::class, 'allowed 0');
 });
 
 it('publishes optional config and exposes the Artisan installer', function () {
-    $this->artisan('list')->expectsOutputToContain('pdf-testing:install')->assertSuccessful();
-    expect($this->app['config']->get('pdf-testing.max_diff_pixels'))->toBe(0);
-    expect(PdfTestingServiceProvider::pathsToPublish(PdfTestingServiceProvider::class, 'pdf-testing-config'))
+    $this->artisan('list')->expectsOutputToContain('assertpdf:install')->assertSuccessful();
+    expect($this->app['config']->get('assertpdf.max_diff_pixels'))->toBe(0);
+    expect(AssertPdfServiceProvider::pathsToPublish(AssertPdfServiceProvider::class, 'assertpdf-config'))
         ->toHaveCount(1);
 });
 
@@ -170,7 +170,7 @@ it('accepts a response obtained through the Laravel HTTP test client', function 
 });
 
 it('does not update the snapshot root when the snapshot name is empty', function () {
-    putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');
+    putenv('ASSERTPDF_UPDATE_SNAPSHOTS=1');
     expect(fn () => expect(__DIR__.'/fixtures/invoice.pdf')->toMatchPdfSnapshot(''))
         ->toThrow(RuntimeException::class, 'Snapshot directory must be a local path');
     expect(is_dir($this->snapshot))->toBeFalse();

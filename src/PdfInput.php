@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PdfTesting;
+namespace AssertPdf;
 
 use Illuminate\Testing\TestResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
