@@ -126,6 +126,18 @@ Filled pairs:
 | Teal light | `#5FD3C6` | links, the tick; Ground text on it 10.0:1 | 10.0:1 AAA | 8.8:1 AAA |
 | Diff light | `#F28B82` | failures and diffs only | 7.6:1 AAA | 6.7:1 AA |
 
+### Extension after design feedback (2026-10-30)
+
+Craig asked for the accent used with more confidence and for the page to show the product's own diff look. Three roles were added; `contrast.mjs` checks them.
+
+| Token | Hex | Role | Ratios |
+| --- | --- | --- | --- |
+| Teal deep | `#06433E` | full-bleed colour-blocked band (the install section) | Paper 11.2:1 AAA, Text 9.5:1 AAA, Text 2 5.7:1 AA, Teal light 6.2:1 AA |
+| Diff mark | `#FF0000` | graphic only: the red pixelmatch writes into `diff-N.png`, used in the hero's snapshot illustration | 4.0:1 on Paper as a graphic; never for text |
+| Diff faded | `#C9CED3` | graphic only: unchanged pixels as the diff PNG shows them | decorative |
+
+Ground (`#0F171F`) is now also used as the header and hero background in both themes, with Text, Text 2, Teal light and Diff light on it (ratios in the dark table above).
+
 Rules:
 
 - Red means a failure or a diff, the same as the toolkit's own `diff-N.png`. Never use it for emphasis, badges of passing states, or decoration.
@@ -137,6 +149,9 @@ Rules:
 
 - Corner radius 6 px on cards, code blocks and buttons; 4 px on badges.
 - 1 px borders in Line; no shadows, no gradients, no background images.
+- **Signature image:** the snapshot triptych. Baseline page, this run's render, and the diff PNG with the changed pixels in Diff mark red on a faded page, captioned with the toolkit's real failure line. It is drawn in HTML and CSS, never a stock image, and is the one picture the brand owns.
+- **Motifs:** print crop marks (thin L-shaped corners in Teal light) around the signature image and before section titles; a faint pixel grid behind the diff page. Both are decorative, drawn in CSS, and never carry meaning.
+- **Rhythm:** sections change shape rather than only colour: a dark split hero, a full-bleed code-and-terminal pair, a compact comparison strip, a Teal deep band, a numbered workflow. Avoid stacking same-width cards on alternating backgrounds.
 - Spacing on an 8 px step: 8, 12, 16, 24, 32, 48, 72.
 - Controls are at least 44 px tall. Primary button: Teal fill, Paper text, weight 500. Secondary: 1 px Ink outline, Ink text.
 - Focus: `outline: 3px solid var(--teal-hover); outline-offset: 2px` on `:focus-visible`, never removed.
@@ -163,7 +178,9 @@ Where a dark-mode variant is wanted on GitHub:
 
 **GitHub social preview.** `examples/social-preview.png` (1280 by 640): Ground background, mark and name top left, one display line, one line of description, the Composer command in mono Teal light. Upload it under the repository's settings when the repo goes public; it is not set by this pack.
 
-**Landing page.** `docs/site/index.html` and `docs/site/styles.css` are built from this pack: Paper and Paper 2 bands, Ink type, Teal buttons and links, a Ground footer and code block, IBM Plex self-hosted, dark mode via the tokens.
+**Landing page.** `docs/site/index.html` and `docs/site/styles.css` are built from this pack: a Ground header and hero carrying the snapshot triptych, a code-and-terminal split, a Teal deep install band, Ink type on Paper elsewhere, IBM Plex self-hosted, dark mode via the tokens.
+
+**Terminal panels.** Ground background, Text for output, Teal light for keywords and passes, Diff light for failures, Text 2 for strings and dimmed lines. Use the toolkit's real message formats: `Expected PDF to contain "120.00".`, `Expected PDF to have 1 page(s); found 2.`, `PDF snapshot page 1: N changed pixels (allowed 0). Diff: …/diff-1.png`.
 
 **Demo app.** When the demo gets any styling, reuse `tokens.css`: Ink on Paper for the invoice page, mono for amounts and invoice numbers. The invoice PDF itself stays plain, since it is a fixture, not marketing.
 

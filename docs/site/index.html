@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laravel PDF Testing: test the PDF your app actually emits</title>
+<meta name="description" content="Free, MIT-licensed Pest and PHPUnit assertions for real PDF text, page count and rendered snapshots in Laravel.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0F171F">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<!--
+  LAUNCH CHECKLIST (remove when done):
+  1. TODO-DEMO: replace both demo links (id="demo-todo" and the nav) with the verified public demo URL.
+  2. TODO-PACKAGIST: confirm craigsimps/laravel-pdf-testing is published before this page goes live;
+     the install command below assumes it.
+  3. TODO-ANALYTICS: optional, free and privacy-friendly only. A GoatCounter snippet is included at the
+     end of the body, commented out. Leave it disabled until Craig decides.
+  Copy for this page lives in this file only. Styling is in styles.css.
+  The invoice pages in the hero are drawn in HTML; the numbers in them are sample data, not measurements.
+-->
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header on-ground">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Laravel PDF Testing, top of page">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+        <path class="page" d="M8 3h12l6 6v18a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke-width="2" stroke-linejoin="round"/>
+        <path class="page" d="M20 3v6h6" stroke-width="2" stroke-linejoin="round"/>
+        <path class="page" d="M11 14h7M11 18h10" stroke-width="2" stroke-linecap="round"/>
+        <path class="tick" d="M11 24l3 3 6-6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Laravel PDF Testing
+    </a>
+    <nav class="site-nav" aria-label="Page sections">
+      <ul>
+        <li><a href="#checks">What it checks</a></li>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="https://github.com/craigsimps/laravel-pdf-testing">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero on-ground" id="top" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Free · MIT · Composer dev package for Pest and PHPUnit</p>
+        <h1 id="hero-title">Your PDF fake passed. Did the invoice still contain the total?</h1>
+        <p class="lead">Test the PDF your Laravel app actually emits: extracted text, page count and rendered visual snapshots. A fake proves you requested a PDF. These assertions inspect the bytes that came back.</p>
+        <div class="actions">
+          <a class="button button-primary" href="#install">Install</a>
+          <a class="button button-secondary" href="#moment">See a failing test</a>
+        </div>
+        <p class="muted">Laravel test responses, file paths, raw bytes, Spatie Laravel PDF and Dompdf objects. No browser, no hosted service.</p>
+      </div>
+
+      <figure class="snapshot crop" aria-labelledby="snap-caption">
+        <div class="snap-row" role="img" aria-label="Three renders of the same invoice page: the approved baseline with a total of 120.00, this run with the total missing, and the diff image, in which the missing total is marked in red.">
+          <div class="snap">
+            <span class="snap-label">page-1.png<small>baseline</small></span>
+            <div class="sheet" aria-hidden="true">
+              <div class="sheet-head"><span>Invoice 1001</span><span>Acme Ltd</span></div>
+              <div class="bar w60"></div>
+              <div class="bar w45"></div>
+              <div class="row"><div class="bar"></div><span>100.00</span></div>
+              <div class="row"><div class="bar"></div><span>20.00</span></div>
+              <div class="total"><span>Total</span><span>120.00</span></div>
+            </div>
+          </div>
+          <div class="snap">
+            <span class="snap-label">actual-1.png<small>this run</small></span>
+            <div class="sheet" aria-hidden="true">
+              <div class="sheet-head"><span>Invoice 1001</span><span>Acme Ltd</span></div>
+              <div class="bar w60"></div>
+              <div class="bar w45"></div>
+              <div class="row"><div class="bar"></div><span>100.00</span></div>
+              <div class="row"><div class="bar"></div><span>20.00</span></div>
+              <div class="total is-missing"><span>Total</span><span>120.00</span></div>
+            </div>
+          </div>
+          <div class="snap">
+            <span class="snap-label is-diff">diff-1.png<small>312 changed pixels</small></span>
+            <div class="sheet is-diff" aria-hidden="true">
+              <div class="sheet-head"><span>Invoice 1001</span><span>Acme Ltd</span></div>
+              <div class="bar w60"></div>
+              <div class="bar w45"></div>
+              <div class="row"><div class="bar"></div><span>100.00</span></div>
+              <div class="row"><div class="bar"></div><span>20.00</span></div>
+              <div class="total"><span>Total</span><span>120.00</span></div>
+            </div>
+          </div>
+        </div>
+        <figcaption id="snap-caption" class="snap-msg"><span class="fail">⨯</span> <span class="dim">toMatchPdfSnapshot</span> PDF snapshot page 1: 312 changed pixels (allowed 0). Diff: tests/pdf-snapshots/invoice-1001/artifacts/diff-1.png</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="moment" id="moment" aria-labelledby="moment-title">
+    <div class="wrap">
+      <h2 class="titled" id="moment-title">The test, and what it says when the total goes missing</h2>
+      <p>Three Pest expectations against the response of a real invoice route. When the template drops the total, two of them fail and tell you exactly what the PDF contained.</p>
+    </div>
+    <div class="split">
+      <div class="pane pane-code">
+        <div class="pane-inner">
+          <p class="pane-title">tests/Feature/InvoicePdfTest.php</p>
+          <pre tabindex="0" aria-label="Pest test file"><code><span class="k">it</span>(<span class="s">'has one page'</span>, <span class="k">function</span> () {
+    <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
+        -&gt;toHavePdfPageCount(1);
+});
+
+<span class="k">it</span>(<span class="s">'shows the total'</span>, <span class="k">function</span> () {
+    <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
+        -&gt;toHavePdfText(<span class="s">'Invoice 1001'</span>)
+        -&gt;toHavePdfText(<span class="s">'120.00'</span>);
+});
+
+<span class="k">it</span>(<span class="s">'matches the approved layout'</span>, <span class="k">function</span> () {
+    <span class="k">expect</span>($this-&gt;get(<span class="s">'/invoices/1001/pdf'</span>))
+        -&gt;toMatchPdfSnapshot(<span class="s">'invoice-1001'</span>);
+});</code></pre>
+        </div>
+      </div>
+      <div class="pane pane-term on-ground">
+        <div class="pane-inner">
+          <p class="pane-title">vendor/bin/pest</p>
+          <pre class="terminal" tabindex="0" aria-label="Pest output with one passing and two failing tests"><code>  <span class="badge-fail">FAIL</span> Tests\Feature\InvoicePdfTest
+  <span class="pass">✓</span> has one page
+  <span class="fail">⨯</span> shows the total
+  <span class="fail">⨯</span> matches the approved layout
+
+  <span class="fail">⨯</span> shows the total
+  Expected PDF to contain "120.00".
+  Extracted text:
+  <span class="dim">Invoice 1001  Acme Ltd</span>
+  <span class="dim">Design work  100.00</span>
+  <span class="dim">VAT  20.00</span>
+  <span class="dim">Total</span>
+
+  <span class="fail">⨯</span> matches the approved layout
+  PDF snapshot page 1: 312 changed pixels (allowed 0).
+  Diff: tests/pdf-snapshots/invoice-1001/artifacts/diff-1.png
+
+  <span class="dim">Tests:</span>  <span class="fail">2 failed</span>, <span class="pass">1 passed</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="checks-section" id="checks" aria-labelledby="checks-title">
+    <div class="wrap">
+      <h2 class="titled" id="checks-title">Three checks on the real document</h2>
+      <dl class="checks">
+        <div class="check">
+          <dt>toHavePdfText()</dt>
+          <dd>A case-sensitive substring of the PDF's text layer. Not OCR, not a layout guarantee.</dd>
+          <dd class="fails">On failure <code>Expected PDF to contain "120.00". Extracted text: …</code></dd>
+        </div>
+        <div class="check">
+          <dt>toHavePdfPageCount()</dt>
+          <dd>Catches the unexpected page break, or the invoice that silently grew a blank second page.</dd>
+          <dd class="fails">On failure <code>Expected PDF to have 1 page(s); found 2.</code></dd>
+        </div>
+        <div class="check">
+          <dt>toMatchPdfSnapshot()</dt>
+          <dd>Renders each page and compares it with a baseline you created on purpose. One mask and a per-page pixel allowance are available.</dd>
+          <dd class="fails">On failure <code>PDF snapshot page 1: 312 changed pixels (allowed 0). Diff: …/diff-1.png</code></dd>
+        </div>
+      </dl>
+      <p class="muted">PHPUnit users get the same three as static <code>PdfAssertions</code> methods.</p>
+    </div>
+  </section>
+
+  <section class="install on-deep" id="install" aria-labelledby="install-title">
+    <div class="wrap">
+      <div class="col">
+        <p class="eyebrow">Two commands</p>
+        <h2 class="titled" id="install-title">Install</h2>
+        <p>Add it to an existing Laravel 12 app with Pest or PHPUnit. The second command installs the pinned renderer inside the package. Network is needed to install, not to assert.</p>
+        <pre class="terminal" tabindex="0" aria-label="Install commands"><code><span class="dim">$</span> composer require --dev 'craigsimps/laravel-pdf-testing:^0.1' -W
+<span class="dim">$</span> vendor/bin/pdf-testing install</code></pre>
+        <p class="muted">No registration step for Pest. The toolkit does not install a PDF generator; bring your own. Full details in the <a href="https://github.com/craigsimps/laravel-pdf-testing#requirements-and-installation">README</a>.</p>
+      </div>
+      <div class="col">
+        <h3>You need</h3>
+        <ul>
+          <li>PHP 8.3 or 8.4</li>
+          <li>Laravel 12 (optional; plain PHPUnit projects work too)</li>
+          <li>Pest 3 or 4, or PHPUnit 11.5 / 12</li>
+          <li>Node 24.21.0 and npm 11, used only by the renderer</li>
+          <li>No browser, no Poppler, no Ghostscript, no hosted service</li>
+        </ul>
+        <p class="note"><strong>Offline after install.</strong> Assertions use in-memory PDF data, bundled fonts and a local Node process. No network requests, no telemetry.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo" id="demo" aria-labelledby="demo-title">
+    <div class="wrap">
+      <div class="col">
+        <h2 class="titled" id="demo-title">A complete example</h2>
+        <p>A minimal Laravel app with a real invoice PDF route and passing text, page-count and snapshot tests. Clone it, run the tests, break the invoice, watch them fail.</p>
+        <!-- TODO-DEMO: replace the href with the verified public demo repository URL. -->
+        <div class="actions"><a class="button button-secondary" id="demo-todo" href="https://github.com/craigsimps/laravel-pdf-testing#demo">Open the demo repository</a></div>
+        <p class="note note-fail"><strong>Not live yet.</strong> This link is a placeholder until the demo repository is public.</p>
+      </div>
+      <div class="col">
+        <h3>Snapshots are explicit</h3>
+        <p>A missing baseline fails. Nothing is created or overwritten unless you ask.</p>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-n">01</span>
+            <div class="step-body">
+              <p><strong>Create the baseline on purpose.</strong></p>
+              <pre tabindex="0" aria-label="Create a baseline"><code>PDF_TESTING_UPDATE_SNAPSHOTS=1 vendor/bin/pest --filter='approved layout'</code></pre>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-n">02</span>
+            <div class="step-body">
+              <p><strong>Review the PNGs</strong> in <code>tests/pdf-snapshots/invoice-1001/</code> before you accept them. On a mismatch, <code>artifacts/diff-1.png</code> shows the changed pixels in red.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-n">03</span>
+            <div class="step-body">
+              <p><strong>Commit</strong> <code>manifest.json</code> and <code>page-*.png</code>, ignore <code>artifacts/</code>, and never set the update flag in normal CI.</p>
+              <p class="muted">Create and compare baselines on the same pinned renderer, operating system and architecture. Cross-OS pixel identity is not promised.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="limits-section" id="limits" aria-labelledby="limits-title">
+    <div class="wrap">
+      <div class="intro">
+        <h2 class="titled" id="limits-title">What it is not</h2>
+        <p>Limits, stated next to the features and in the same type size.</p>
+      </div>
+      <ul class="limits">
+        <li><strong>Not OCR.</strong> Scanned PDFs without a text layer, and password-protected PDFs, are out of scope.</li>
+        <li><strong>Not a replacement for fakes.</strong> Keep testing that your app requested a PDF. This tests what the PDF contains.</li>
+        <li><strong>Not a service.</strong> Everything runs on your machine or CI. The toolkit collects no telemetry.</li>
+        <li><strong>Not for untrusted uploads.</strong> It is for your own application and test PDFs, with a 60-second timeout per assertion.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer on-ground">
+  <div class="wrap">
+    <p>MIT licensed. Source, changelog and issues on <a href="https://github.com/craigsimps/laravel-pdf-testing">GitHub</a>.</p>
+    <p>Laravel is a trademark of Taylor Otwell. This package is independent and not endorsed by Laravel.</p>
+  </div>
+</footer>
+
+<!--
+  TODO-ANALYTICS (disabled). GoatCounter is free for non-commercial use, open source and sets no cookies.
+  To enable: create a site at goatcounter.com, replace YOURCODE, and uncomment. Nothing loads while this is a comment.
+  <script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+-->
+</body>
+</html>
