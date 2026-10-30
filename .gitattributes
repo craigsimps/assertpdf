@@ -1,2 +1,6 @@
 # PDF xref records have significant spacing; do not normalise or diff as text.
 tests/fixtures/*.pdf binary
+# Keep the brand pack, landing page and review previews out of Composer dist archives.
+/docs/brand export-ignore
+/docs/site export-ignore
+/docs/launch/previews export-ignore

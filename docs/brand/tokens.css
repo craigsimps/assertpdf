@@ -1,0 +1,68 @@
+/*
+ * Laravel PDF Testing brand tokens.
+ * Source of truth for colour, type and shape. docs/site/styles.css copies these values;
+ * keep the two in step. Contrast ratios are listed in docs/brand/README.md and checked
+ * by `node docs/brand/contrast.mjs`.
+ */
+:root {
+  /* Light (default) */
+  --paper: #FFFFFF;        /* page ground */
+  --paper-2: #F3F5F7;      /* code blocks, panels, alternate bands */
+  --line: #D5DBE1;         /* decorative rules and card borders only */
+  --ink: #16222E;          /* headings, body (16.1:1 on paper) */
+  --ink-2: #3F4C59;        /* secondary text (8.8:1) */
+  --ink-3: #5B6875;        /* captions, eyebrow labels (5.7:1; 5.2:1 on paper-2) */
+  --teal: #0B6E66;         /* links, primary buttons, the tick (6.1:1 on paper) */
+  --teal-hover: #095A54;   /* hover, focus ring (8.1:1) */
+  --teal-tint: #E3F3F1;    /* "passed" notes background */
+  --teal-text: #075E57;    /* text on teal-tint (6.7:1) */
+  --diff: #B42318;         /* failures and diffs only (6.6:1 on paper) */
+  --diff-tint: #FDECEA;    /* failure notes background; diff on it 5.8:1 */
+
+  /* Added 2026-10-30 after design feedback: a colour-blocked band and the product's diff look. */
+  --teal-deep: #06433E;    /* full-bleed band ground; Paper on it 11.2:1, Text 9.5:1, Teal light 6.2:1 */
+  --ground: #0F171F;       /* hero, header, terminal blocks and footer in both themes */
+  --ground-text: #E8EDF2;
+  --ground-text-2: #AEBBC8;
+  --ground-teal: #5FD3C6;
+  --ground-diff: #F28B82;
+  --diff-mark: #FF0000;    /* graphic only, never text: the red pixelmatch writes into diff-N.png */
+  --diff-faded: #C9CED3;   /* graphic only: unchanged pixels as the diff PNG shows them, greyed */
+  --crop: #5FD3C6;         /* crop and registration marks; decorative */
+
+  /* Type */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --size-display: 3rem;    /* 48px, line-height 1.1, letter-spacing -0.02em, weight 600 */
+  --size-h2: 1.75rem;      /* 28px, line-height 1.2, letter-spacing -0.01em, weight 600 */
+  --size-h3: 1.25rem;      /* 20px, weight 600 */
+  --size-body: 1.0625rem;  /* 17px, line-height 1.6 */
+  --size-small: 0.9375rem; /* 15px */
+  --size-caption: 0.875rem;/* 14px */
+  --size-label: 0.8125rem; /* 13px, mono eyebrow labels */
+
+  /* Shape */
+  --radius: 6px;
+  --control-height: 44px;  /* minimum touch target */
+  --focus-ring: 3px solid var(--teal-hover);
+  --focus-offset: 2px;
+  --measure: 60ch;
+}
+
+/* Dark: the same roles, remapped. Applied by prefers-color-scheme on the site. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0F171F;      /* ground */
+    --paper-2: #182330;    /* surface */
+    --line: #2B3A49;
+    --ink: #E8EDF2;        /* text (15.3:1 on ground) */
+    --ink-2: #AEBBC8;      /* text-2 (9.2:1) */
+    --ink-3: #8A98A6;      /* muted (6.1:1; 5.4:1 on surface) */
+    --teal: #5FD3C6;       /* teal-light (10.0:1 on ground) */
+    --teal-hover: #8AE3D9;
+    --teal-tint: #12302E;
+    --teal-text: #8AE3D9;
+    --diff: #F28B82;       /* diff-light (7.6:1 on ground) */
+    --diff-tint: #3A1C1A;
+  }
+}
