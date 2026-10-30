@@ -23,24 +23,25 @@ final class PdfInput
         $testResponse = $pdf instanceof TestResponse ? $pdf : null;
         $response = $testResponse ? $testResponse->baseResponse : $pdf;
         if ($response instanceof Response) {
-            $status = $response->getStatusCode();
             $type = $response->headers->get('Content-Type', '(missing)');
-            $context = "Expected a PDF response (status {$status}, content type {$type}).";
             if (!$response->isSuccessful() || strtolower(trim(explode(';', $type)[0])) !== 'application/pdf') {
-                throw new \RuntimeException($context);
+                throw new \RuntimeException('Expected a successful response with Content-Type application/pdf.');
             }
             if ($response instanceof BinaryFileResponse) {
                 $pdf = file_get_contents($response->getFile()->getPathname());
             } elseif ($response instanceof StreamedResponse) {
                 $level = ob_get_level();
-                ob_start();
+                $pdf = '';
+                ob_start(static function (string $chunk) use (&$pdf): string {
+                    $pdf .= $chunk;
+                    return '';
+                });
                 try {
                     if ($testResponse) {
                         $pdf = $testResponse->streamedContent();
                     } else {
                         // Do not mark the original response as sent; assertions may be chained.
                         (clone $response)->sendContent();
-                        $pdf = ob_get_contents();
                     }
                 } finally {
                     while (ob_get_level() > $level) ob_end_clean();
@@ -49,7 +50,7 @@ final class PdfInput
                 $pdf = $response->getContent();
             }
             if (!is_string($pdf) || !str_starts_with($pdf, '%PDF-')) {
-                throw new \RuntimeException($context.' Body does not begin with %PDF-.');
+                throw new \RuntimeException('Body does not begin with %PDF-.');
             }
             return $pdf;
         }

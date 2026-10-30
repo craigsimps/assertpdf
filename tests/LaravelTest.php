@@ -80,12 +80,69 @@ it('reports HTTP status and content type for invalid PDF responses even when neg
     [200, 'application/pdf', '<html>Not a PDF</html>'],
 ]);
 
-it('cleans output buffers after a streaming failure', function () {
+it('captures flushed PDF streams without leaking output and allows repeated assertions', function (string $kind) {
+    $bytes = file_get_contents(__DIR__.'/fixtures/invoice.pdf');
+    $response = match ($kind) {
+        'flushed' => new StreamedResponse(function () use ($bytes) {
+            echo $bytes;
+            ob_flush();
+            flush();
+        }, 200, ['Content-Type' => 'application/pdf']),
+        'chunked' => new StreamedResponse(function () use ($bytes) {
+            foreach (str_split(substr($bytes, 0, 600), 137) as $chunk) {
+                echo $chunk;
+                ob_flush();
+                flush();
+            }
+            // Include a final unflushed tail as well as the explicitly flushed chunks.
+            echo substr($bytes, 600);
+        }, 200, ['Content-Type' => 'application/pdf']),
+        'Laravel generator' => response()->stream(function () use ($bytes) {
+            yield substr($bytes, 0, 137);
+            yield substr($bytes, 137, 300);
+            yield substr($bytes, 437);
+        }, 200, ['Content-Type' => 'application/pdf']),
+    };
     $level = ob_get_level();
-    $response = new StreamedResponse(function () { echo 'partial'; throw new RuntimeException('stream failed'); }, 200, ['Content-Type' => 'application/pdf']);
-    expect(fn () => expect($response)->not->toHavePdfPageCount(1))->toThrow(RuntimeException::class, 'stream failed');
-    expect(ob_get_level())->toBe($level);
-});
+    ob_start();
+    try {
+        expect($response)->toHavePdfText('Invoice 1001')->toHavePdfPageCount(1);
+        expect(fn () => expect($response)->toHavePdfPageCount(2))->toThrow(AssertionFailedError::class, 'found 1');
+    } finally {
+        $leaked = ob_get_clean();
+        expect($leaked)->toBe('');
+        expect(ob_get_level())->toBe($level);
+    }
+})->with(['flushed', 'chunked', 'Laravel generator']);
+
+it('cleans output buffers without leaks after a flushing stream fails', function (bool $wrapped) {
+    $level = ob_get_level();
+    $response = new StreamedResponse(function () {
+        echo 'partial';
+        ob_flush();
+        flush();
+        throw new RuntimeException('stream failed');
+    }, 200, ['Content-Type' => 'application/pdf']);
+    if ($wrapped) $response = TestResponse::fromBaseResponse($response);
+    ob_start();
+    try {
+        expect(fn () => expect($response)->not->toHavePdfPageCount(1))->toThrow(RuntimeException::class, 'stream failed');
+        expect(ob_get_level())->toBe($level + 1);
+    } finally {
+        $leaked = ob_get_clean();
+        expect($leaked)->toBe('');
+        expect(ob_get_level())->toBe($level);
+    }
+})->with([false, true]);
+
+it('preserves HTTP context for malformed PDF bytes even under negation', function (bool $wrapped) {
+    $response = new Response('%PDF-invalid', 200, ['Content-Type' => 'application/pdf']);
+    if ($wrapped) $response = TestResponse::fromBaseResponse($response);
+    expect(fn () => PdfAssertions::assertPdfPageCount($response, 1))
+        ->toThrow(RuntimeException::class, 'status 200, content type application/pdf');
+    expect(fn () => expect($response)->not->toHavePdfText('Invoice'))
+        ->toThrow(RuntimeException::class, 'status 200, content type application/pdf');
+})->with([false, true]);
 
 it('uses configured pixel defaults but honours an explicit zero override', function () {
     putenv('PDF_TESTING_UPDATE_SNAPSHOTS=1');

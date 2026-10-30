@@ -42,10 +42,10 @@ final class PdfAssertions
     private static function run(mixed $pdf, string $operation, array $options = []): array
     {
         try {
-            $pdf = PdfInput::bytes($pdf);
+            $bytes = PdfInput::bytes($pdf);
             Renderer::assertInstalled();
             $process = new Process(['node', dirname(__DIR__).'/bin/pdf.mjs']);
-            $process->setInput(json_encode(['pdf' => base64_encode($pdf), 'operation' => $operation] + $options, JSON_THROW_ON_ERROR));
+            $process->setInput(json_encode(['pdf' => base64_encode($bytes), 'operation' => $operation] + $options, JSON_THROW_ON_ERROR));
             $process->setTimeout(60);
             $process->run();
             if (!$process->isSuccessful()) {
@@ -53,8 +53,11 @@ final class PdfAssertions
             }
             return json_decode($process->getOutput(), true, flags: JSON_THROW_ON_ERROR);
         } catch (Throwable $error) {
+            $response = $pdf instanceof \Illuminate\Testing\TestResponse ? $pdf->baseResponse : $pdf;
+            $context = $response instanceof \Symfony\Component\HttpFoundation\Response
+                ? ' (status '.$response->getStatusCode().', content type '.$response->headers->get('Content-Type', '(missing)').')' : '';
             // An unreadable input is an error, not a mismatch that Pest's ->not may invert.
-            throw new \RuntimeException('Cannot read PDF: '.$error->getMessage(), previous: $error);
+            throw new \RuntimeException('Cannot read PDF: '.$error->getMessage().$context, previous: $error);
         }
     }
 }
