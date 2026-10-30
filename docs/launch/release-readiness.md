@@ -8,7 +8,7 @@ The naming decision below was superseded on 2026-10-30 by the rename to AssertPD
 
 Keep the existing local renderer and optional generator boundaries. No new architecture or dependency tradeoff was introduced; retaining these established choices did not require a Counselors consultation. The README and CI define the verified support targets, not every combination Composer could theoretically resolve. No Laravel 11/13 or PHP 8.5 support is claimed.
 
-The repository uses Composer's VCS-derived version, not a hard-coded `version` field. `v0.1.0-rc.1` is a local candidate tag; `v0.1.0` remains an unreleased changelog entry. In 0.x, minor releases can break compatibility; patch releases are fixes. Do not push either tag until Craig authorises publication.
+The repository uses Composer's VCS-derived version, not a hard-coded `version` field. `v0.1.0-rc.1` was the milestone-3 local candidate tag and is superseded; the changelog's `0.1.0` entry is dated 2026-10-30 and `v0.1.0` is created at checklist B3. In 0.x, minor releases can break compatibility; patch releases are fixes. Do not push either tag until Craig authorises publication.
 
 ## Licence check
 
@@ -26,7 +26,7 @@ No third-party logo, screenshot, marketing asset or customer invoice was added. 
 ## Review and publication gates
 
 1. Required local checks: `composer validate --strict`, `composer lint`, `composer test`; standalone and Testbench installation smoke; separate demo setup/test from its README.
-2. Require every hosted matrix row green on the **exact candidate commit**. The issue handoff records commit, counts and run URL. Confirm the local RC tag resolves to that same commit.
+2. Require every hosted matrix row green on the exact reviewed commit. At checklist B3, create `v0.1.0` on that commit; the old local RC tag is superseded.
 3. Independent reviewer verifies a fresh Laravel installation from README alone, inspects the demo and checks that baselines never silently update. Builder verification is not independent review.
 4. Claude Code creates the brand identity pack, then landing page and any demo styling. Use `landing-brief.md`; part 1 intentionally contains no design work.
 5. Craig explicitly approves visibility, demo remote creation/publication, public tags, Packagist submission and landing go-live. None is done by this branch.
