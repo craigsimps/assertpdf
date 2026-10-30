@@ -54,7 +54,7 @@ Create the project from this repository with these values. Nothing here creates 
 
 ## Go-live settings
 
-The page is written as if the package is already on Packagist and the demo repository is public, because both happen before the site goes live. These non-visible settings still need real values at go-live:
+The page assumes the package is on Packagist and the demo repository is public. Both must be available before the site goes live. Check these settings and launch tasks:
 
 | Where | Setting | Today | At go-live |
 | --- | --- | --- | --- |
