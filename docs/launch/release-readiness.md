@@ -33,3 +33,14 @@ No third-party logo, screenshot, marketing asset or customer invoice was added. 
 6. Before public launch, replace README/demo/post placeholders with verified URLs, switch install instructions to the published `^0.1` package, set the changelog release date, and record the actual launch-day demand baseline. Publish only after the final reviewed commit passes CI.
 
 Use [demand.md](demand.md) for post-launch measurement and [posts.md](posts.md) for drafts Craig can send. No launch clock starts while the project is private.
+
+## Go-live check, 2026-10-30
+
+Checks recorded for [#3](https://github.com/craigsimps/assertpdf/issues/3), section A, on the `go-live-prep` branch before publication:
+
+1. Builder checks before the copy edit: `composer validate --strict` valid, `composer lint` pass, `composer test` 55 passed (295 assertions), `sh tests/installation.sh` standalone and Testbench consumers pass. The demo (`craigsimps/assertpdf-demo`, branch `go-live-prep`) installs from its README with the renamed package and passes `composer test` (3 passed, 1 intentional visual skip) and `composer test:visual` (1 passed).
+2. Hosted CI on the exact commit: recorded in the #3 handoff comment. The local `v0.1.0-rc.1` tag still points at the milestone-3 candidate `2127e20`, not at this commit; it is superseded. Tagging `v0.1.0` on the reviewed commit is Craig's step (checklist B3).
+3. Independent review follows the Codex copy edit. Results will be recorded on #3.
+4. Completed in #3 part 2, #6 and #8: the brand pack, landing site in `craigsimps/assertpdf-com` and AssertPDF rename.
+5. Publication steps for Craig: making `craigsimps/assertpdf` and `craigsimps/assertpdf-demo` public, the `v0.1.0` tag and GitHub release, Packagist submission, Cloudflare Pages and Web Analytics.
+6. Done on this branch: README demo link and `^0.1` install docs, changelog date `2026-10-30`, launch-post URLs, demo rename. Still open: record the launch-day demand baseline in [demand.md](demand.md) once public (checklist B6).

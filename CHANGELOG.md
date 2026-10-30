@@ -1,8 +1,8 @@
 # Changelog
 
-## 0.1.0 — unreleased
+## 0.1.0 — 2026-10-30
 
-First free release, prepared as local candidate `v0.1.0-rc.1`. No public tag or Packagist release yet. Release date is deliberately unset until publication is approved.
+First free release.
 
 ### Changed
 
